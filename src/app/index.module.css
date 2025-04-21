@@ -1,0 +1,261 @@
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-x: hidden;
+}
+
+.parent_grid {
+  display: grid;
+  grid-template-rows: 5rem 1fr;
+  height: 100vh;
+  width: 100%;
+  grid-template-areas:
+    "navBar navBar"
+    "body body"
+    "footer footer";
+}
+
+.navBar {
+  grid-area: navBar;
+  width: 100%;
+  position: fixed;
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  align-items: center;
+  z-index: 3;
+  box-shadow: 0 2px 10px 0px rgba(0, 0, 0, 0.45);
+}
+
+.navBar img {
+  width: 5rem;
+  margin-left: 1rem;
+  cursor: default !important;
+}
+
+.website_title {
+  display: flex;
+  color: rgb(255, 107, 107);
+  font-size: x-large;
+  gap: 1rem;
+}
+
+.website_title span {
+  color: rgb(116, 197, 255);
+}
+
+.title_wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.onlydogs {
+  visibility: visible;
+  opacity: 1;
+  transition:
+    visibility 0.3s ease,
+    opacity 0.3s ease;
+}
+
+.dogstyle {
+  position: absolute;
+  box-sizing: content-box;
+  left: 0;
+  visibility: hidden;
+  opacity: 0;
+  width: 8rem;
+  overflow: hidden;
+  border-right: 2px solid black;
+  transition:
+    visibility 0.3s ease,
+    opacity 0.3s ease;
+}
+
+.title_wrap:hover .onlydogs {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.title_wrap:hover .dogstyle {
+  visibility: visible;
+  opacity: 1;
+  animation:
+    typing 2s steps(8, end),
+    cursor 1s steps(8, end) infinite;
+}
+
+@keyframes typing {
+  0% {
+    width: 0rem;
+  }
+}
+@keyframes cursor {
+  50% {
+    border: none;
+  }
+}
+
+.login_button {
+  background-color: rgb(255, 107, 107);
+  color: white;
+  width: 7rem;
+  border-radius: 5rem;
+  margin-right: 1rem;
+  cursor: pointer;
+  transition:
+    transform 0.5s ease,
+    background-color 0.5s ease;
+}
+
+.login_button p {
+  cursor: pointer;
+}
+
+.login_button:hover {
+  transform: translateY(-0.5rem);
+  background-color: rgb(255, 65, 65);
+}
+
+.body {
+  grid-area: body;
+  display: grid;
+  grid-template-rows: auto 1fr 1fr;
+  grid-template-areas:
+    "content1 content1"
+    "content2 content2"
+    "content3 content3";
+  justify-items: center;
+}
+
+.content1 {
+  grid-area: content1;
+  text-align: center;
+  height: 99%;
+  border-radius: 0rem 0rem 5rem 5rem;
+  width: 100%;
+  background: linear-gradient(135deg, rgb(255, 204, 204), rgb(192, 229, 255));
+}
+
+.content1 h1 {
+  font-size: 3rem;
+}
+
+.content1 img {
+  width: 50%;
+  cursor: default !important;
+}
+
+.content2 {
+  grid-area: content2;
+  justify-items: center;
+  margin: 1rem;
+}
+
+.cards1 {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+}
+
+.card1 {
+  flex: 1;
+  justify-items: center;
+  text-align: justify;
+  border-radius: 10px;
+  min-width: 250px;
+  max-width: 350px;
+  padding: 3rem;
+  box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.25);
+  transition:
+    transform 0.5s ease,
+    box-shadow 0.5s ease;
+}
+
+.card1:hover {
+  transform: translateY(-3rem);
+  box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.5);
+}
+
+.card1:hover .img1 {
+  visibility: hidden;
+}
+
+.card1:hover .img2 {
+  visibility: visible;
+}
+
+.img_wrapper {
+  position: relative;
+}
+
+.img1 {
+  width: 10rem;
+  z-index: 1;
+  visibility: visible;
+  cursor: default !important;
+}
+
+.img2 {
+  position: absolute;
+  left: 0;
+  width: 10rem;
+  z-index: 2;
+  visibility: hidden;
+  cursor: default !important;
+}
+
+.content3 {
+  grid-area: content3;
+}
+
+.h1 {
+  font-size: 3rem;
+  position: relative;
+}
+
+.h1::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  height: 5px;
+  width: 100%;
+  border-radius: 5px;
+  background: linear-gradient(to right, rgb(255, 107, 107), rgb(116, 197, 255));
+}
+
+.footer {
+  grid-area: footer;
+  text-align: center;
+  align-content: center;
+  color: white;
+  height: 2rem;
+  background-color: rgb(52, 58, 64);
+}
+
+@media screen and (max-width: 600px) and (orientation: portrait) {
+  .content1 h1 {
+    font-size: 2.5rem;
+  }
+
+  .content1 img {
+    width: 70%;
+  }
+
+  .h1 {
+    font-size: 2rem;
+  }
+
+  .card1:hover {
+    transform: translateY(-1rem);
+  }
+}
+
+@media screen and (min-width: 768px) and (orientation: portrait) {
+  .content1 p {
+    font-size: 1.5rem;
+  }
+}

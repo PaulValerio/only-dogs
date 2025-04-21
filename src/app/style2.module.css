@@ -1,0 +1,149 @@
+.main {
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background-image: url(/images/DogBG.jpg);
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.span {
+  color: rgb(255, 107, 107);
+}
+
+.span + span {
+  color: rgb(116, 197, 255);
+}
+
+.flex1 {
+  display: flex;
+  position: relative;
+}
+
+.user_icon1 {
+  position: absolute;
+  top: -15px;
+  font-size: 1.5rem;
+}
+
+.user_input {
+  color: white;
+  background: none;
+  border: none;
+  width: 20rem;
+  font-size: 1.5rem;
+  padding-left: 1.5rem;
+  border-bottom: 3px solid white;
+  caret-color: white;
+}
+
+.user_label {
+  position: absolute;
+  top: -15px;
+  transition:
+    top 0.3s ease,
+    font-size 0.3s ease;
+  font-size: 1rem;
+  margin-left: 1.5rem;
+}
+
+.user_input:focus {
+  outline: none;
+  background: none;
+  border: none;
+  border-bottom: 3px solid white;
+}
+
+.flex1:focus-within .user_label {
+  top: -25px;
+  font-size: 1rem;
+}
+
+.container2 {
+  text-align: center;
+  justify-items: center;
+  color: white;
+  border: 3px solid white;
+  border-radius: 10px;
+  width: 30rem;
+  background-color: rgba(0, 0, 0, 0.4);
+  transition:
+    backdrop-filter 0.5s ease,
+    border 0.5s ease;
+}
+
+.container2 h1 {
+    margin: 0.5rem;
+}
+
+.container2:hover {
+  backdrop-filter: blur(4px);
+  border: 0px solid rgba(255, 255, 255, 0);
+}
+
+.location_input {
+  position: relative;
+  background: none;
+  border: none;
+  color: white;
+  top: -15px;
+  width: 20rem;
+  font-size: 1.5rem;
+  padding-left: 1.3rem;
+}
+
+.location_input option {
+  color: black;
+  font-size: 1rem;
+  line-height: 2rem;
+}
+
+.picture_input {
+  position: relative;
+  color: white;
+  top: -15px;
+  width: 20rem;
+  font-size: 1.5rem;
+  padding-left: 1.8rem;
+}
+
+.center {
+  justify-items: center;
+}
+
+.border_bottom1 {
+  border-bottom: 3px solid white;
+}
+
+.block2 {
+  display: grid;
+  row-gap: 2rem;
+  margin-bottom: 1rem;
+}
+
+.h2 {
+  text-align: left;
+  margin: 0rem;
+}
+
+.signup_button {
+  background-color: rgb(255, 255, 255);
+  font-size: 1rem;
+  border-radius: 10px;
+  width: 15rem;
+  height: 5vh;
+  border: none;
+  margin-bottom: 1rem;
+}
+
+@media screen and (max-width: 600px) and (orientation: portrait) {
+  .container2 {
+    width: 90vw;
+  }
+}
+

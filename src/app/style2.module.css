@@ -64,7 +64,7 @@
   font-size: 1rem;
 }
 
-.container2 {
+.container1 {
   text-align: center;
   justify-items: center;
   color: white;
@@ -77,11 +77,11 @@
     border 0.5s ease;
 }
 
-.container2 h1 {
+.container1 h1 {
     margin: 0.5rem;
 }
 
-.container2:hover {
+.container1:hover {
   backdrop-filter: blur(4px);
   border: 0px solid rgba(255, 255, 255, 0);
 }
@@ -120,7 +120,7 @@
   border-bottom: 3px solid white;
 }
 
-.block2 {
+.block1 {
   display: grid;
   row-gap: 2rem;
   margin-bottom: 1rem;
@@ -131,7 +131,7 @@
   margin: 0rem;
 }
 
-.signup_button {
+.button1 {
   background-color: rgb(255, 255, 255);
   font-size: 1rem;
   border-radius: 10px;

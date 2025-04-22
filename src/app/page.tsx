@@ -124,7 +124,72 @@ export default function Home() {
 
               <div className={styles1.content3}>
                 <div className={styles1.h1}>
-                  <h1>How It Works</h1>
+                  <h1>Why Choose OnlyDogs?</h1>
+                </div>
+
+                <div className={styles1.cards1}>
+                  <div className={styles1.card1}>
+                    <div className={styles1.img_wrapper}>
+                      <img
+                        src="/images/Secure.png"
+                        alt="Noimg"
+                        className={styles1.img1}
+                      />
+
+                      <img
+                        src="/images/Secure.gif"
+                        alt="Noimg"
+                        className={styles1.img2}
+                      />
+                    </div>
+                    <h1>Safe & Secure</h1>
+                    <p>
+                      Your information is protected, and we verify all users to
+                      ensure a safe community.
+                    </p>
+                  </div>
+
+                  <div className={styles1.card1}>
+                    <div className={styles1.img_wrapper}>
+                      <img
+                        src="/images/Location.png"
+                        alt="Noimg"
+                        className={styles1.img1}
+                      />
+
+                      <img
+                        src="/images/Location.gif"
+                        alt="Noimg"
+                        className={styles1.img2}
+                      />
+                    </div>
+                    <h1>Location Matching</h1>
+                    <p>
+                      Find dogs in your neighborhood or city to make meetups
+                      convenient and stress-free.
+                    </p>
+                  </div>
+
+                  <div className={styles1.card1}>
+                    <div className={styles1.img_wrapper}>
+                      <img
+                        src="/images/Interface.png"
+                        alt="Noimg"
+                        className={styles1.img1}
+                      />
+
+                      <img
+                        src="/images/Interface.gif"
+                        alt="Noimg"
+                        className={styles1.img2}
+                      />
+                    </div>
+                    <h1>Easy Interface</h1>
+                    <p>
+                      Our simple check for accept and cross for reject interface makes finding matches for your dog
+                      quick and easy.
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -138,13 +203,14 @@ export default function Home() {
 
       <SignedIn>
         <main className={styles2.main}>
-          <div className={styles2.container2}>
+          <div className={styles2.container1}>
             <h1>
-              Welcome to <span className={styles2.span}>Only</span><span>Dogs</span>
+              Welcome to <span className={styles2.span}>Only</span>
+              <span>Dogs</span>
             </h1>
 
             <form action="#" className={styles2.center}>
-              <div className={styles2.block2}>
+              <div className={styles2.block1}>
                 <h2 className={styles2.h2}>About Your Dog</h2>
 
                 <div className={styles2.flex1}>
@@ -282,8 +348,8 @@ export default function Home() {
                 </div>
               </div>
 
-              <button type="submit" className={styles2.signup_button}>
-                Sign Up
+              <button type="submit" className={styles2.button1}>
+                Enter
               </button>
             </form>
           </div>

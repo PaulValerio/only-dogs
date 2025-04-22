@@ -164,11 +164,12 @@
 .card1 {
   flex: 1;
   justify-items: center;
-  text-align: justify;
   border-radius: 10px;
   min-width: 250px;
   max-width: 350px;
   padding: 3rem;
+  text-align: justify;
+  background-color: white;
   box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.25);
   transition:
     transform 0.5s ease,
@@ -210,6 +211,8 @@
 
 .content3 {
   grid-area: content3;
+  justify-items: center;
+  margin: 1rem;
 }
 
 .h1 {

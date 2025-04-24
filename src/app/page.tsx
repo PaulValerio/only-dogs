@@ -1,7 +1,7 @@
 "use client";
 
 import { SignedOut, SignUpButton, SignedIn } from "@clerk/nextjs";
-import styles1 from "./index.module.css";
+import styles1 from "./style1.module.css";
 import styles2 from "./style2.module.css";
 import { useState } from "react";
 import Link from "next/link";

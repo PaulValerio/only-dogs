@@ -3,16 +3,9 @@
 import { SignedOut, SignUpButton, SignedIn } from "@clerk/nextjs";
 import styles1 from "./style1.module.css";
 import styles2 from "./style2.module.css";
-import { useState } from "react";
 import Link from "next/link";
 
 export default function Home() {
-  const [isVisible, setIsVisible] = useState(false);
-
-  function togglePassword() {
-    setIsVisible((prev) => !prev);
-  }
-
   return (
     <main>
       <SignedOut>

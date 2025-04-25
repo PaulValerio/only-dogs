@@ -4,8 +4,25 @@ import { SignedOut, SignUpButton, SignedIn } from "@clerk/nextjs";
 import styles1 from "./style1.module.css";
 import styles2 from "./style2.module.css";
 import Link from "next/link";
+import { UploadButton } from "~/utils/uploadthing";
+import { useRouter } from "next/navigation";
+
+function showToast(message: string) {
+  const toast = document.createElement("div");
+  toast.className = styles2.toast ?? "";
+  toast.textContent = message;
+
+  const container = document.getElementById("toast-container");
+  container?.appendChild(toast);
+
+  setTimeout(() => {
+    toast.remove();
+  }, 4000);
+}
+
 
 export default function Home() {
+  const router = useRouter();
   return (
     <main>
       <SignedOut>
@@ -179,8 +196,8 @@ export default function Home() {
                     </div>
                     <h1>Easy Interface</h1>
                     <p>
-                      Our simple check for accept and cross for reject interface makes finding matches for your dog
-                      quick and easy.
+                      Our simple check for accept and cross for reject interface
+                      makes finding matches for your dog quick and easy.
                     </p>
                   </div>
                 </div>
@@ -325,13 +342,24 @@ export default function Home() {
                 </div>
 
                 <div className={styles2.flex1}>
-                  <div className={styles2.border_bottom1}>
-                    <input
-                      type="file"
-                      required
-                      className={styles2.picture_input}
-                      id="dog-picture"
-                      name="dog-picture"
+                  <div className={styles2.picture_input}>
+                    <UploadButton
+                      endpoint="imageUploader"
+                      className={styles2.picture_content}
+
+                      onUploadBegin={() => {
+                        showToast("⏳ Upload Started");
+                      }}
+
+                      onClientUploadComplete={(res) => {
+                        showToast("✅ Upload Completed");
+                        router.refresh();
+                      }}
+
+                      onUploadError={(error: Error) => {
+                        showToast(`❌ ERROR! ${error.message}`);
+                        router.refresh();
+                      }}
                     />
                   </div>
 
@@ -346,6 +374,7 @@ export default function Home() {
               </button>
             </form>
           </div>
+          <div id="toast-container" className={styles2.toast_container}></div>
         </main>
       </SignedIn>
     </main>

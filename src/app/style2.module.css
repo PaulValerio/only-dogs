@@ -49,7 +49,7 @@
     top 0.3s ease,
     font-size 0.3s ease;
   font-size: 1rem;
-  margin-left: 1.5rem;
+  margin-left: 1.8rem;
 }
 
 .user_input:focus {
@@ -105,11 +105,63 @@
 
 .picture_input {
   position: relative;
-  color: white;
+  justify-items: start;
   top: -15px;
   width: 20rem;
   font-size: 1.5rem;
-  padding-left: 1.8rem;
+  border-bottom: 3px solid white;
+}
+
+.picture_content {
+  position: relative;
+  margin-left: 2rem;
+}
+
+.picture_content::after {
+  position: absolute;
+  bottom: 1.5;
+  content: "Image (4MB)";
+  font-size: 0.75rem;
+  color: white;
+}
+
+.toast_container {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  z-index: 1000;
+}
+
+.toast {
+  background-color: white;
+  color: black;
+  padding: 1rem 1.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+  opacity: 1;
+  animation: fadeInOut 4s ease forwards;
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  10% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  90% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
 }
 
 .center {

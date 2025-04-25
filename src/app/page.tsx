@@ -23,6 +23,31 @@ function showToast(message: string) {
 
 export default function Home() {
   const router = useRouter();
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  
+    const formData = new FormData(e.currentTarget);
+    const name = formData.get("dog-name");
+    const age = formData.get("dog-age");
+    const gender = formData.get("dog-gender");
+    const breed = formData.get("dog-breed");
+    const location = formData.get("location");
+  
+    const res = await fetch("/api/dog", {
+      method: "POST",
+      body: JSON.stringify({ name, age, gender, breed, location }),
+      headers: { "Content-Type": "application/json" },
+    });
+  
+    if (res.ok) {
+      showToast("✅ Dog data submitted!");
+      router.refresh();
+    } else {
+      showToast("❌ Failed to submit dog data");
+    }
+  };
+
   return (
     <main>
       <SignedOut>
@@ -219,7 +244,7 @@ export default function Home() {
               <span>Dogs</span>
             </h1>
 
-            <form action="#" className={styles2.center}>
+            <form onSubmit={handleSubmit} className={styles2.center}>
               <div className={styles2.block1}>
                 <h2 className={styles2.h2}>About Your Dog</h2>
 
@@ -351,7 +376,7 @@ export default function Home() {
                         showToast("⏳ Upload Started");
                       }}
 
-                      onClientUploadComplete={(res) => {
+                      onClientUploadComplete={() => {
                         showToast("✅ Upload Completed");
                         router.refresh();
                       }}

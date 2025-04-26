@@ -1,0 +1,278 @@
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-x: hidden;
+}
+
+.parent_grid {
+  display: grid;
+  grid-template-rows: 5rem 1fr;
+  height: 100vh;
+  width: 100%;
+  grid-template-areas:
+    "navBar navBar"
+    "body body"
+    "footer footer";
+}
+
+.navBar {
+  grid-area: navBar;
+  display: flex;
+  width: 100%;
+  background-color: rgb(255, 107, 107);
+  justify-content: space-between;
+  text-align: center;
+  align-items: center;
+  z-index: 3;
+  box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.45);
+}
+
+.navBar img {
+  width: 5rem;
+  margin-left: 1rem;
+  cursor: default !important;
+}
+
+.userButtonFloat {
+  position: absolute;
+  top: 1.5rem;
+  right: 1rem;
+  z-index: 4;
+}
+
+.website_title {
+  display: flex;
+  color: white;
+  font-size: x-large;
+  gap: 1rem;
+}
+
+.website_title span {
+  color: rgb(116, 197, 255);
+}
+
+.title_wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.onlydogs {
+  visibility: visible;
+  opacity: 1;
+  transition:
+    visibility 0.3s ease,
+    opacity 0.3s ease;
+}
+
+.dogstyle {
+  position: absolute;
+  box-sizing: content-box;
+  left: 0;
+  visibility: hidden;
+  opacity: 0;
+  width: 8rem;
+  overflow: hidden;
+  border-right: 2px solid white;
+  transition:
+    visibility 0.3s ease,
+    opacity 0.3s ease;
+}
+
+.title_wrap:hover .onlydogs {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.title_wrap:hover .dogstyle {
+  visibility: visible;
+  opacity: 1;
+  animation:
+    typing 2s steps(8, end),
+    cursor 1s steps(8, end) infinite;
+}
+
+@keyframes typing {
+  0% {
+    width: 0rem;
+  }
+}
+@keyframes cursor {
+  50% {
+    border: none;
+  }
+}
+
+.buttons_container {
+  display: flex;
+  margin-right: 2.7rem;
+}
+
+.button1 {
+  background-color: white;
+  color: rgb(255, 107, 107);
+  align-content: center;
+  width: 7rem;
+  height: 2rem;
+  border-radius: 5rem;
+  margin-right: 1rem;
+  cursor: pointer;
+  box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.45);
+  transition:
+    color 0.5s ease,
+    box-shadow 0.5s ease,
+    background-color 0.5s ease;
+}
+
+.button1_active {
+  background-color: rgb(255, 107, 107);
+  color: white;
+  align-content: center;
+  width: 7rem;
+  height: 2rem;
+  border-radius: 5rem;
+  margin-right: 1rem;
+  cursor: pointer;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.45);
+  transition:
+    color 0.5s ease,
+    box-shadow 0.5s ease,
+    background-color 0.5s ease;
+}
+
+.button1:hover {
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.45);
+  background-color: rgb(255, 107, 107);
+  color: white;
+}
+
+.button1_active:hover {
+  box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.45);
+  background-color: white;
+  color: rgb(255, 107, 107);
+}
+
+.buttons_container:has(.button1:hover) .button1_active {
+  background-color: white;
+  color: rgb(255, 107, 107);
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.45);
+}
+
+.body {
+  grid-area: body;
+  position: relative;
+}
+
+.card_container {
+  position: absolute;
+  background-color: rgb(116, 197, 255);
+  color: white;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 28rem;
+  width: 25rem;
+  border-radius: 10px;
+}
+
+.dog_picture {
+  align-content: center;
+  width: 100%;
+  height: 50%;
+}
+
+.dog_picture img {
+  border-radius: 10px 10px 0px 0px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.dog_info {
+  border-top: 3px solid white;
+  padding: 1rem;
+  background-color: rgb(255, 107, 107);
+  border-radius: 0px 0px 10px 10px;
+}
+
+.dog_info_content {
+  display: flex;
+  justify-content: space-between;
+}
+
+.reject_button {
+  background-color: red;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  cursor: pointer;
+  text-align: center;
+  align-content: center;
+  transition: transform 0.3s ease;
+}
+
+.accept_button {
+  background-color: green;
+  width: 2rem;
+  height: 2rem;
+  font-size: 1.2rem;
+  border-radius: 50%;
+  cursor: pointer;
+  text-align: center;
+  align-content: center;
+  transition: transform 0.5s ease;
+}
+
+.accept_button:hover,
+.reject_button:hover {
+  transform: scale(1.5);
+}
+
+.footer {
+  grid-area: footer;
+  text-align: center;
+  align-content: center;
+  color: white;
+  height: 2rem;
+  background-color: rgb(52, 58, 64);
+}
+
+@media screen and (max-width: 600px) and (orientation: portrait) {
+  .website_title {
+    font-size: 1rem;
+  }
+
+  .website_title img {
+    width: 3rem;
+  }
+
+  .button1 {
+    width: 3rem;
+    font-size: 0.5rem;
+  }
+
+  .button1_active {
+    width: 3rem;
+    font-size: 0.5rem;
+  }
+
+  .card_container {
+    height: 50%;
+    width: 80%;
+  }
+}
+
+@media screen and (max-width: 1000px) and (orientation: landscape) {
+  .parent_grid {
+    grid-template-rows: 6rem 30rem;
+  }
+
+  .navBar {
+    position: fixed;
+  }
+
+  .userButtonFloat {
+    top: 2rem;
+  }
+}

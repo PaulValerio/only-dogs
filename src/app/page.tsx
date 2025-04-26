@@ -6,6 +6,7 @@ import styles2 from "./style2.module.css";
 import Link from "next/link";
 import { UploadButton } from "~/utils/uploadthing";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 function showToast(message: string) {
   const toast = document.createElement("div");
@@ -20,29 +21,44 @@ function showToast(message: string) {
   }, 4000);
 }
 
-
 export default function Home() {
   const router = useRouter();
+  
+  useEffect(() => {
+    const checkIfDogProfileExists = async () => {
+      const res = await fetch("/api/dog");
+      const data = await res.json();
+
+      if (data.hasDogProfile) {
+        router.push("/date");
+      }
+    };
+
+    checkIfDogProfileExists();
+  }, [router]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-  
+
     const formData = new FormData(e.currentTarget);
     const name = formData.get("dog-name");
     const age = formData.get("dog-age");
     const gender = formData.get("dog-gender");
     const breed = formData.get("dog-breed");
     const location = formData.get("location");
-  
+
     const res = await fetch("/api/dog", {
       method: "POST",
       body: JSON.stringify({ name, age, gender, breed, location }),
       headers: { "Content-Type": "application/json" },
     });
-  
+
     if (res.ok) {
       showToast("✅ Dog data submitted!");
       router.refresh();
+      setTimeout(() => {
+        router.push("/date");
+      }, 1500);
     } else {
       showToast("❌ Failed to submit dog data");
     }
@@ -68,6 +84,7 @@ export default function Home() {
                   </h1>
                 </div>
               </div>
+
               <SignUpButton>
                 <div className={styles1.login_button}>
                   <p>Login</p>
@@ -244,6 +261,8 @@ export default function Home() {
               <span>Dogs</span>
             </h1>
 
+            <Link href={"/date"}>Date</Link>
+
             <form onSubmit={handleSubmit} className={styles2.center}>
               <div className={styles2.block1}>
                 <h2 className={styles2.h2}>About Your Dog</h2>
@@ -371,16 +390,13 @@ export default function Home() {
                     <UploadButton
                       endpoint="imageUploader"
                       className={styles2.picture_content}
-
                       onUploadBegin={() => {
                         showToast("⏳ Upload Started");
                       }}
-
                       onClientUploadComplete={() => {
                         showToast("✅ Upload Completed");
                         router.refresh();
                       }}
-
                       onUploadError={(error: Error) => {
                         showToast(`❌ ERROR! ${error.message}`);
                         router.refresh();

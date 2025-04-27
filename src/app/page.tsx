@@ -8,34 +8,31 @@ import { UploadButton } from "~/utils/uploadthing";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
-function showToast(message: string) {
-  const toast = document.createElement("div");
-  toast.className = styles2.toast ?? "";
-  toast.textContent = message;
-
-  const container = document.getElementById("toast-container");
-  container?.appendChild(toast);
-
-  setTimeout(() => {
-    toast.remove();
-  }, 4000);
-}
-
 export default function Home() {
   const router = useRouter();
-  
+
   useEffect(() => {
-    const checkIfDogProfileExists = async () => {
-      const res = await fetch("/api/dog");
-      const data = await res.json();
+    fetch("/api/dog")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.hasDogProfile) {
+          router.push("/date");
+        }
+      });
+  }, []);
 
-      if (data.hasDogProfile) {
-        router.push("/date");
-      }
-    };
+  const showToast = (message: string) => {
+    const toast = document.createElement("div");
+    toast.className = styles2.toast ?? "";
+    toast.textContent = message;
 
-    checkIfDogProfileExists();
-  }, [router]);
+    const container = document.getElementById("toast-container");
+    container?.appendChild(toast);
+
+    setTimeout(() => {
+      toast.remove();
+    }, 4000);
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

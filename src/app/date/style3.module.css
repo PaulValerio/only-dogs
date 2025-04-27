@@ -118,7 +118,7 @@
   border-radius: 5rem;
   margin-right: 1rem;
   cursor: pointer;
-  box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.45);
+  box-shadow: inset 0px 0px 10px black;
   transition:
     color 0.5s ease,
     box-shadow 0.5s ease,
@@ -148,7 +148,7 @@
 }
 
 .button1_active:hover {
-  box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.45);
+  box-shadow: inset 0px 0px 10px black;
   background-color: white;
   color: rgb(255, 107, 107);
 }
@@ -162,6 +162,7 @@
 .body {
   grid-area: body;
   position: relative;
+  overflow: hidden;
 }
 
 .card_container {
@@ -174,6 +175,25 @@
   height: 28rem;
   width: 25rem;
   border-radius: 10px;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+.swipeRight {
+  animation: swipeRight 0.5s forwards;
+}
+
+.swipeLeft {
+  animation: swipeLeft 0.5s forwards;
+}
+
+@keyframes swipeRight {
+  0% { transform: translateX(0); opacity: 1; }
+  100% { transform: translate(100%, -100%) rotate(30deg); opacity: 0; }
+}
+
+@keyframes swipeLeft {
+  0% { transform: translateX(0); opacity: 1; }
+  100% { transform: translate(-100%, -100%) rotate(-30deg); opacity: 0; }
 }
 
 .dog_picture {

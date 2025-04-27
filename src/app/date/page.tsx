@@ -6,16 +6,10 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { getDogImage, getDogInfo } from "~/server/queries";
 
-export default function Home() {
-  const [dogImage, setDogImage] = useState<
-    {
-      id: number;
-      name_image: string;
-      url: string;
-    }[]
-  >([]);
+export const dynamic = "force-dynamic";
 
-  const [dogInfos, setDogInfos] = useState<
+export default function Home() {
+  const [dogs, setDogs] = useState<
     {
       id: number;
       name_dog: string;
@@ -23,6 +17,7 @@ export default function Home() {
       gender: string;
       breed: string;
       location: string;
+      url: string;
     }[]
   >([]);
 
@@ -30,8 +25,16 @@ export default function Home() {
     const fetchData = async () => {
       const images = await getDogImage();
       const infos = await getDogInfo();
-      setDogImage(images);
-      setDogInfos(infos);
+
+      const combined = infos.map((info) => {
+        const image = images.find((img) => img.id === info.id);
+        return {
+          ...info,
+          url: image ? image.url : "/images/defaultDog.png",
+        };
+      });
+
+      setDogs(combined);
     };
     fetchData();
   }, []);
@@ -77,50 +80,42 @@ export default function Home() {
           </div>
 
           <div className={styles3.body}>
-            <div className={styles3.card_container}>
-              {dogImage.map((image) => (
-                <div key={image.id} className={styles3.dog_picture}>
-                  <img src={image.url} alt="No Dog" />
+            {dogs.map((dog) => (
+              <div key={dog.id} className={styles3.card_container}>
+                <div className={styles3.dog_picture}>
+                  <img src={dog.url} alt="No Dog" />
                 </div>
-              ))}
 
-              <div className={styles3.dog_info}>
-                {dogInfos.map((infos) => (
-                  <div key={infos.id} className={styles3.dog_info_content}>
-                    <p>Name: {infos.name_dog}</p>
-                    <p>Age: {infos.age}</p>
+                <div className={styles3.dog_info}>
+                  <div className={styles3.dog_info_content}>
+                    <p>Name: {dog.name_dog}</p>
+                    <p>Age: {dog.age}</p>
                   </div>
-                ))}
 
-                {dogInfos.map((infos) => (
-                  <div key={infos.id} className={styles3.dog_info_content}>
-                    <p>Gender: {infos.gender}</p>
-                    <p>Breed: {infos.breed}</p>
+                  <div className={styles3.dog_info_content}>
+                    <p>Gender: {dog.gender}</p>
+                    <p>Breed: {dog.breed}</p>
                   </div>
-                ))}
 
-                {dogInfos.map((infos) => (
-                  <div key={infos.id}>
-                    <p>Municipality/City: {infos.location}</p>
-                  </div>
-                ))}
+                  <p>Municipality/City: {dog.location}</p>
 
-                <div className={styles3.dog_info_content}>
-                  <div
-                    className={styles3.reject_button}
-                    onClick={(e) => handleReject(e)}
-                  >
-                    ✕
-                  </div>
-                  <div
-                    className={styles3.accept_button}
-                    onClick={(e) => handleAccept(e)}
-                  >
-                    ♥
+                  <div className={styles3.dog_info_content}>
+                    <div
+                      className={styles3.reject_button}
+                      onClick={(e) => handleReject(e)}
+                    >
+                      ✕
+                    </div>
+                    <div
+                      className={styles3.accept_button}
+                      onClick={(e) => handleAccept(e)}
+                    >
+                      ♥
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            ))}
           </div>
 
           <footer className={styles3.footer}>

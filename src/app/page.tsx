@@ -3,10 +3,11 @@
 import { SignedOut, SignUpButton, SignedIn } from "@clerk/nextjs";
 import styles1 from "./style1.module.css";
 import styles2 from "./style2.module.css";
-import Link from "next/link";
 import { UploadButton } from "~/utils/uploadthing";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+
+export const dynamic = "force-dynamic";
 
 export default function Home() {
   const router = useRouter();
@@ -23,7 +24,7 @@ export default function Home() {
 
   const showToast = (message: string) => {
     const toast = document.createElement("div");
-    toast.className = styles2.toast ?? "";
+    toast.className = styles2.toast!;
     toast.textContent = message;
 
     const container = document.getElementById("toast-container");
@@ -257,8 +258,6 @@ export default function Home() {
               Welcome to <span className={styles2.span}>Only</span>
               <span>Dogs</span>
             </h1>
-
-            <Link href={"/date"}>Date</Link>
 
             <form onSubmit={handleSubmit} className={styles2.center}>
               <div className={styles2.block1}>

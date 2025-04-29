@@ -48,3 +48,39 @@ export const dog_info = createTable2(
   }),
   (t) => [index("name_dog_idx").on(t.name_dog)],
 );
+
+export const createTable3 = pgTableCreator((name) => `only-dogs_${name}`);
+
+export const likes = createTable3(
+  "likes",
+  (d) => ({
+    id: d.integer().primaryKey().generatedByDefaultAsIdentity(),
+    from: d.integer().notNull(),
+    to: d.integer().notNull(),
+    event: d.varchar({ length: 256 }).notNull(),
+    createdAt: d
+      .timestamp({ withTimezone: true })
+      .default(sql`CURRENT_TIMESTAMP`)
+      .notNull(),
+    updatedAt: d.timestamp({ withTimezone: true }).$onUpdate(() => new Date()),
+  }),
+  (t) => [index("from_idx").on(t.from)],
+);
+
+export const createTable4 = pgTableCreator((name) => `only-dogs_${name}`);
+
+export const matches = createTable4(
+  "matches",
+  (d) => ({
+    id: d.integer().primaryKey().generatedByDefaultAsIdentity(),
+    dog1_id: d.integer().notNull(),
+    dog2_id: d.integer().notNull(),
+    event: d.varchar({ length: 256 }).notNull(),
+    createdAt: d
+      .timestamp({ withTimezone: true })
+      .default(sql`CURRENT_TIMESTAMP`)
+      .notNull(),
+    updatedAt: d.timestamp({ withTimezone: true }).$onUpdate(() => new Date()),
+  }),
+  (t) => [index("dog1_id_idx").on(t.dog1_id)],
+);

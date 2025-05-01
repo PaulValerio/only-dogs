@@ -1,26 +1,27 @@
 "use server";
 
 import { db } from "./db";
-import { likes, matches, dog_info } from "./db/schema";
+import { decision, matches, dog_info } from "./db/schema";
 import { and, eq } from "drizzle-orm";
 
 export async function acceptDog(currentDogId: number, targetDogId: number) {
-  await db.insert(likes).values({
+  await db.insert(decision).values({
     event: `user-${currentDogId} accepted user-${targetDogId}`,
     from: currentDogId,
     to: targetDogId,
   });
-  
+
   const mutual = await db
     .select()
-    .from(likes)
-    .where(and(eq(likes.from, targetDogId), eq(likes.to, currentDogId)));
+    .from(decision)
+    .where(and(eq(decision.from, targetDogId), eq(decision.to, currentDogId)));
 
   if (mutual.length > 0) {
     const [currentDog] = await db
       .select()
       .from(dog_info)
       .where(eq(dog_info.id, currentDogId));
+
     const [targetDog] = await db
       .select()
       .from(dog_info)
@@ -38,4 +39,12 @@ export async function acceptDog(currentDogId: number, targetDogId: number) {
   }
 
   return { matched: false };
+}
+
+export async function rejectDog(currentDogId: number, targetDogId: number) {
+  await db.insert(decision).values({
+    event: `user-${currentDogId} rejected user-${targetDogId}`,
+    from: currentDogId,
+    to: targetDogId,
+  });
 }

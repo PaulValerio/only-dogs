@@ -51,8 +51,8 @@ export const dog_info = createTable2(
 
 export const createTable3 = pgTableCreator((name) => `only-dogs_${name}`);
 
-export const likes = createTable3(
-  "likes",
+export const decision = createTable3(
+  "decision",
   (d) => ({
     id: d.integer().primaryKey().generatedByDefaultAsIdentity(),
     from: d.integer().notNull(),

@@ -3,12 +3,12 @@
 import { auth } from "@clerk/nextjs/server";
 import { db } from "./db";
 import { eq } from "drizzle-orm";
-import { dog_info } from "./db/schema";
+import { dog_info, decision } from "./db/schema";
 
 export async function getDogImage() {
-  const user = await auth();
+  const { userId } = await auth();
 
-  if (!user?.userId) throw new Error("Unauthorized");
+  if (!userId) throw new Error("Unauthorized");
 
   const images = await db.query.image.findMany();
 
@@ -16,13 +16,27 @@ export async function getDogImage() {
 }
 
 export async function getDogInfo() {
-  const user = await auth();
+  const { userId } = await auth();
+  if (!userId) throw new Error("Unauthorized");
 
-  if (!user?.userId) throw new Error("Unauthorized");
+  const userDog = await getUserDog(userId);
 
-  const infos = await db.query.dog_info.findMany();
+  if (!userDog) return [];
 
-  return infos;
+  const likedDogs = await db
+    .select({ to: decision.to })
+    .from(decision)
+    .where(eq(decision.from, userDog.id));
+
+  const likedIds = likedDogs.map((entry) => entry.to);
+
+  const allDogs = await db.select().from(dog_info);
+
+  const filteredDogs = allDogs.filter(
+    (dog) => dog.id !== userDog.id && !likedIds.includes(dog.id)
+  );
+
+  return filteredDogs;
 }
 
 export async function getUserDog(userId: string) {

@@ -15,10 +15,10 @@ export async function POST(req: Request) {
   await db.insert(dog_info).values({
     name_dog: name,
     age: parseInt(age),
-    gender,
-    breed,
-    location,
-    userId,
+    gender: gender,
+    breed: breed,
+    location: location,
+    userId: userId,
   });
 
   return NextResponse.json({ success: true });

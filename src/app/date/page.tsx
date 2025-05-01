@@ -5,7 +5,7 @@ import styles3 from "./style3.module.css";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { getDogImage, getDogInfo } from "~/server/queries";
-import { acceptDog } from "~/server/action";
+import { acceptDog, rejectDog } from "~/server/action";
 
 export const dynamic = "force-dynamic";
 
@@ -64,10 +64,13 @@ export default function Date() {
     }
   };
 
-  const handleReject = (e: React.MouseEvent) => {
+  const handleReject = async (e: React.MouseEvent, targetDogId: number) => {
     const button = e.currentTarget;
     const dogCard = button.closest(`.${styles3.card_container}`);
     dogCard!.classList.add(styles3.swipeLeft!);
+
+    if (!currentDogId) return;
+    await rejectDog(currentDogId, targetDogId);
   };
 
   return (
@@ -102,44 +105,42 @@ export default function Date() {
             <div
               className={`${styles3.pageContent} ${matchDog ? styles3.blurred : ""}`}
             >
-              {dogs
-                .filter((dog) => dog.id !== currentDogId)
-                .map((dog) => (
-                  <div key={dog.id} className={styles3.card_container}>
-                    <div className={styles3.dog_picture1}>
-                      <img src={dog.url} />
+              {dogs.map((dog) => (
+                <div key={dog.id} className={styles3.card_container}>
+                  <div className={styles3.dog_picture1}>
+                    <img src={dog.url} />
+                  </div>
+
+                  <div className={styles3.dog_info}>
+                    <div className={styles3.dog_info_content}>
+                      <p>Name: {dog.name_dog}</p>
+                      <p>Age: {dog.age}</p>
                     </div>
 
-                    <div className={styles3.dog_info}>
-                      <div className={styles3.dog_info_content}>
-                        <p>Name: {dog.name_dog}</p>
-                        <p>Age: {dog.age}</p>
+                    <div className={styles3.dog_info_content}>
+                      <p>Gender: {dog.gender}</p>
+                      <p>Breed: {dog.breed}</p>
+                    </div>
+
+                    <p>Municipality/City: {dog.location}</p>
+
+                    <div className={styles3.dog_info_content}>
+                      <div
+                        className={styles3.reject_button}
+                        onClick={(e) => handleReject(e, dog.id)}
+                      >
+                        ✕
                       </div>
-
-                      <div className={styles3.dog_info_content}>
-                        <p>Gender: {dog.gender}</p>
-                        <p>Breed: {dog.breed}</p>
-                      </div>
-
-                      <p>Municipality/City: {dog.location}</p>
-
-                      <div className={styles3.dog_info_content}>
-                        <div
-                          className={styles3.reject_button}
-                          onClick={(e) => handleReject(e)}
-                        >
-                          ✕
-                        </div>
-                        <div
-                          className={styles3.accept_button}
-                          onClick={(e) => handleAccept(e, dog.id)}
-                        >
-                          ♥
-                        </div>
+                      <div
+                        className={styles3.accept_button}
+                        onClick={(e) => handleAccept(e, dog.id)}
+                      >
+                        ♥
                       </div>
                     </div>
                   </div>
-                ))}
+                </div>
+              ))}
             </div>
 
             <div

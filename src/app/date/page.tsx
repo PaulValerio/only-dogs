@@ -12,6 +12,8 @@ export const dynamic = "force-dynamic";
 export default function Date() {
   const [currentDogId, setCurrentDogId] = useState<number | null>(null);
 
+  const [matchDog, setMatchDog] = useState<null | (typeof dogs)[0]>(null);
+
   const [dogs, setDogs] = useState<
     {
       id: number;
@@ -57,7 +59,8 @@ export default function Date() {
     const result = await acceptDog(currentDogId, targetDogId);
 
     if (result.matched) {
-      alert("🎉 It's a match!");
+      const matchedDog = dogs.find((dog) => dog.id === targetDogId);
+      setMatchDog(matchedDog ?? null);
     }
   };
 
@@ -96,44 +99,74 @@ export default function Date() {
           </div>
 
           <div className={styles3.body}>
-            {dogs
-              .filter((dog) => dog.id !== currentDogId)
-              .map((dog) => (
-                <div key={dog.id} className={styles3.card_container}>
-                  <div className={styles3.dog_picture}>
-                    <img src={dog.url} />
+            <div
+              className={`${styles3.pageContent} ${matchDog ? styles3.blurred : ""}`}
+            >
+              {dogs
+                .filter((dog) => dog.id !== currentDogId)
+                .map((dog) => (
+                  <div key={dog.id} className={styles3.card_container}>
+                    <div className={styles3.dog_picture1}>
+                      <img src={dog.url} />
+                    </div>
+
+                    <div className={styles3.dog_info}>
+                      <div className={styles3.dog_info_content}>
+                        <p>Name: {dog.name_dog}</p>
+                        <p>Age: {dog.age}</p>
+                      </div>
+
+                      <div className={styles3.dog_info_content}>
+                        <p>Gender: {dog.gender}</p>
+                        <p>Breed: {dog.breed}</p>
+                      </div>
+
+                      <p>Municipality/City: {dog.location}</p>
+
+                      <div className={styles3.dog_info_content}>
+                        <div
+                          className={styles3.reject_button}
+                          onClick={(e) => handleReject(e)}
+                        >
+                          ✕
+                        </div>
+                        <div
+                          className={styles3.accept_button}
+                          onClick={(e) => handleAccept(e, dog.id)}
+                        >
+                          ♥
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+            </div>
+
+            <div
+              className={`${styles3.alert_container} ${matchDog ? styles3.show : ""}`}
+            >
+              {matchDog && (
+                <div className={styles3.alert}>
+                  <h1>🎉 It's A Match!</h1>
+
+                  <p>You Can Now Message {matchDog.name_dog}.</p>
+
+                  <div className={styles3.dog_picture2}>
+                    <img src={matchDog.url} />
                   </div>
 
-                  <div className={styles3.dog_info}>
-                    <div className={styles3.dog_info_content}>
-                      <p>Name: {dog.name_dog}</p>
-                      <p>Age: {dog.age}</p>
+                  <div className={styles3.alert_buttons}>
+                    <div
+                      className={styles3.cancel_button}
+                      onClick={() => setMatchDog(null)}
+                    >
+                      Cancel
                     </div>
-
-                    <div className={styles3.dog_info_content}>
-                      <p>Gender: {dog.gender}</p>
-                      <p>Breed: {dog.breed}</p>
-                    </div>
-
-                    <p>Municipality/City: {dog.location}</p>
-
-                    <div className={styles3.dog_info_content}>
-                      <div
-                        className={styles3.reject_button}
-                        onClick={(e) => handleReject(e)}
-                      >
-                        ✕
-                      </div>
-                      <div
-                        className={styles3.accept_button}
-                        onClick={(e) => handleAccept(e, dog.id)}
-                      >
-                        ♥
-                      </div>
-                    </div>
+                    <div className={styles3.message_button}>Message</div>
                   </div>
                 </div>
-              ))}
+              )}
+            </div>
           </div>
 
           <footer className={styles3.footer}>

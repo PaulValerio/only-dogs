@@ -16,6 +16,7 @@ export default function Home() {
     fetch("/api/dog")
       .then((res) => res.json())
       .then((data) => {
+        router.refresh();
         if (data.hasDogProfile) {
           router.push("/date");
         }
@@ -56,7 +57,7 @@ export default function Home() {
       router.refresh();
       setTimeout(() => {
         router.push("/date");
-      }, 1500);
+      }, 1000);
     } else {
       showToast("❌ Failed to submit dog data");
     }
@@ -98,7 +99,7 @@ export default function Home() {
                   with other dog owners in your area, arrange dates, and help
                   your dog find their soulmate!
                 </p>
-                <img src="/images/Doggies.png" alt="" />
+                <img src="/images/Doggies.png" alt="Noimg" />
               </div>
 
               <div className={styles1.content2}>

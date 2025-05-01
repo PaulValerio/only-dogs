@@ -26,6 +26,10 @@ export async function getDogInfo() {
 }
 
 export async function getUserDog(userId: string) {
+  const user = await auth();
+
+  if (!user?.userId) throw new Error("Unauthorized");
+
   const result = await db
     .select()
     .from(dog_info)

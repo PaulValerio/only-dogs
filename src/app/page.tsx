@@ -3,14 +3,16 @@
 import { SignedOut, SignUpButton, SignedIn } from "@clerk/nextjs";
 import styles1 from "./style1.module.css";
 import styles2 from "./style2.module.css";
-import { UploadButton } from "~/utils/uploadthing";
+import { useUploadThing } from "~/utils/uploadthing";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export const dynamic = "force-dynamic";
 
 export default function Home() {
   const router = useRouter();
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     fetch("/api/dog")
@@ -36,8 +38,25 @@ export default function Home() {
     }, 4000);
   };
 
+  const { startUpload } = useUploadThing("imageUploader", {
+    onUploadBegin: () => {
+      showToast("⏳ Upload Image Started");
+    },
+    onClientUploadComplete: () => {
+      showToast("✅ Upload Image Completed");
+      router.refresh();
+    },
+    onUploadError: (error: Error) => {
+      showToast(`❌ ERROR! ${error.message}`);
+      router.refresh();
+    },
+  });
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (isSubmitting) return;
+    setIsSubmitting(true);
 
     const formData = new FormData(e.currentTarget);
     const name = formData.get("dog-name");
@@ -45,6 +64,9 @@ export default function Home() {
     const gender = formData.get("dog-gender");
     const breed = formData.get("dog-breed");
     const location = formData.get("location");
+    const dog_picture = formData.get("dog-picture");
+
+    await startUpload([dog_picture as File]);
 
     const res = await fetch("/api/dog", {
       method: "POST",
@@ -53,13 +75,13 @@ export default function Home() {
     });
 
     if (res.ok) {
-      showToast("✅ Dog data submitted!");
+      showToast("✅ Dog Info Submitted!");
       router.refresh();
       setTimeout(() => {
         router.push("/date");
-      }, 1000);
+      }, 1500);
     } else {
-      showToast("❌ Failed to submit dog data");
+      showToast("❌ Failed To Submit Dog Info");
     }
   };
 
@@ -342,6 +364,22 @@ export default function Home() {
 
                 <div className={styles2.flex1}>
                   <div className={styles2.border_bottom1}>
+                    <input
+                      type="file"
+                      required
+                      className={styles2.picture_input}
+                      id="dog-picture"
+                      name="dog-picture"
+                    />
+                  </div>
+
+                  <div className={styles2.user_icon1}>
+                    <i className="fa-solid fa-image fa-sm"></i>
+                  </div>
+                </div>
+
+                <div className={styles2.flex1}>
+                  <div className={styles2.border_bottom1}>
                     <select
                       required
                       className={styles2.location_input}
@@ -381,34 +419,14 @@ export default function Home() {
                     <i className="fa-solid fa-location-dot"></i>
                   </div>
                 </div>
-
-                <div className={styles2.flex1}>
-                  <div className={styles2.picture_input}>
-                    <UploadButton
-                      endpoint="imageUploader"
-                      className={styles2.picture_content}
-                      onUploadBegin={() => {
-                        showToast("⏳ Upload Started");
-                      }}
-                      onClientUploadComplete={() => {
-                        showToast("✅ Upload Completed");
-                        router.refresh();
-                      }}
-                      onUploadError={(error: Error) => {
-                        showToast(`❌ ERROR! ${error.message}`);
-                        router.refresh();
-                      }}
-                    />
-                  </div>
-
-                  <div className={styles2.user_icon1}>
-                    <i className="fa-solid fa-image fa-sm"></i>
-                  </div>
-                </div>
               </div>
 
-              <button type="submit" className={styles2.button1}>
-                Enter
+              <button
+                type="submit"
+                className={styles2.button1}
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? "Wait For A Moment" : "Enter"}
               </button>
             </form>
           </div>

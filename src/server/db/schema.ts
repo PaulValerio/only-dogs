@@ -84,3 +84,21 @@ export const matches = createTable4(
   }),
   (t) => [index("dog1_id_idx").on(t.dog1_id)],
 );
+
+export const createTable5 = pgTableCreator((name) => `only-dogs_${name}`);
+
+export const messages = createTable5(
+  "messages",
+  (d) => ({
+    id: d.integer().primaryKey().generatedByDefaultAsIdentity(),
+    sender_id: d.integer().notNull(),
+    receiver_id: d.integer().notNull(),
+    message: d.varchar({ length: 1000 }).notNull(),
+    createdAt: d
+      .timestamp({ withTimezone: true })
+      .default(sql`CURRENT_TIMESTAMP`)
+      .notNull(),
+    updatedAt: d.timestamp({ withTimezone: true }).$onUpdate(() => new Date()),
+  }),
+  (t) => [index("sender_receiver_idx").on(t.sender_id, t.receiver_id)],
+);

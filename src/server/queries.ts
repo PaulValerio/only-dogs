@@ -2,8 +2,8 @@
 
 import { auth } from "@clerk/nextjs/server";
 import { db } from "./db";
-import { eq } from "drizzle-orm";
-import { dog_info, decision } from "./db/schema";
+import { eq, or } from "drizzle-orm";
+import { dog_info, decision, matches } from "./db/schema";
 
 export async function getDogImage() {
   const { userId } = await auth();
@@ -37,6 +37,16 @@ export async function getDogInfo() {
   );
 
   return filteredDogs;
+}
+
+export async function getMatches(dogId: number) {
+  const res = await db
+    .select()
+    .from(matches)
+    .where(or(eq(matches.dog1_id, dogId), eq(matches.dog2_id, dogId)))
+    .orderBy(matches.createdAt);
+
+  return res;
 }
 
 export async function getUserDog(userId: string) {

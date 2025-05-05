@@ -156,179 +156,152 @@
 .buttons_container:has(.button1:hover) .button1_active {
   background-color: white;
   color: rgb(255, 107, 107);
-  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.45);
+  box-shadow: inset 0 0 10px black;
 }
 
 .body {
   grid-area: body;
   position: relative;
   overflow: hidden;
-  align-content: center;
 }
 
-.pageContent {
-  transition: filter 0.3s ease;
-}
-
-.blurred {
-  filter: blur(5px);
-  pointer-events: none;
-}
-
-.card_container {
-  position: absolute;
-  background-color: rgb(255, 255, 255);
-  color: white;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  height: 28rem;
-  width: 25rem;
-  border-radius: 10px;
-  z-index: 5;
-  transition: transform 0.5s ease, opacity 0.5s ease;
-}
-
-.swipeRight {
-  animation: swipeRight 0.5s forwards;
-}
-
-.swipeLeft {
-  animation: swipeLeft 0.5s forwards;
-}
-
-@keyframes swipeRight {
-  0% { transform: translateX(0); opacity: 1; }
-  100% { transform: translate(100%, -100%) rotate(30deg); opacity: 0; }
-}
-
-@keyframes swipeLeft {
-  0% { transform: translateX(0); opacity: 1; }
-  100% { transform: translate(-100%, -100%) rotate(-30deg); opacity: 0; }
-}
-
-.dog_picture1 {
-  align-content: center;
+.grid1 {
+  display: grid;
+  grid-template-columns: 10rem 1fr;
+  height: 100vh;
   width: 100%;
-  height: 55%;
+  grid-template-areas: "chats messages";
 }
 
-.dog_picture1 img {
-  border-radius: 10px 10px 0px 0px;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.dog_info {
-  border-top: 3px solid white;
-  padding: 1rem;
-  background-color: rgb(255, 107, 107);
-  border-radius: 0px 0px 10px 10px;
-}
-
-.dog_info_content {
-  display: flex;
-  justify-content: space-between;
-  height: 2.5rem;
-}
-
-.reject_button {
-  background-color: red;
-  width: 2rem;
-  height: 2rem;
-  border-radius: 50%;
-  cursor: pointer;
-  text-align: center;
-  align-content: center;
-  transition: transform 0.3s ease;
-}
-
-.accept_button {
-  background-color: green;
-  width: 2rem;
-  height: 2rem;
-  font-size: 1.2rem;
-  border-radius: 50%;
-  cursor: pointer;
-  text-align: center;
-  align-content: center;
-  transition: transform 0.5s ease;
-}
-
-.accept_button:hover,
-.reject_button:hover {
-  transform: scale(1.5);
-}
-
-.alert_container {
-  display: none;
-  position: absolute;
-  height: 25rem;
-  width: 20rem;
-  top: 50%;
-  left: 50%;
-  border-radius: 10px;
-  transform: translate(-50%, -50%);
-  color: white;
-  background-color: rgb(255, 107, 107);
-  z-index: 6;
-}
-
-.alert_container.show {
+.chats {
+  grid-area: chats;
   display: block;
+  margin-left: 1rem;
+  border-right: 2px solid rgb(201, 201, 201);
 }
 
-.alert {
-  text-align: center;
+.font_size1 {
+  font-size: 1.5rem;
 }
 
-.dog_picture2 {
-  align-content: center;
-  width: 100%;
-  height: 15rem;
-  margin-bottom: 0.5rem;
+.chats_content {
+  display: block;
+  overflow-y: auto;
+  height: calc(100vh - 12rem);
 }
 
-.dog_picture2 img {
-  border-radius: 10px 10px 0px 0px;
-  width: 100%;
-  height: 100%;
-  border-bottom: 3px solid white;
+.flex1 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.profile1 {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
   object-fit: cover;
 }
 
-.alert_buttons {
-  margin: auto 1rem;
+.messages {
+  grid-area: messages;
+  display: grid;
+  grid-template-rows: 5rem 54vh 5rem;
+  height: 100vh;
+  width: 100%;
+  grid-template-areas:
+    "head head"
+    "message_area message_area"
+    "text_container text_container";
+}
+
+.head {
+  grid-area: head;
+  margin-left: 1rem;
   display: flex;
-  justify-content: space-between;
 }
 
-.cancel_button {
-  background-color: red;
-  width: 5rem;
-  height: 2rem;
+.profile2 {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.message_area {
+  grid-area: message_area;
+  background-color: rgba(201, 201, 201, 0.5);
+  overflow-y: auto;
+}
+
+.message_otherUser {
+  display: flex;
+  justify-content: flex-start;
+  margin: 1rem;
+}
+
+.message_currentUser {
+  display: flex;
+  justify-content: flex-end;
+  margin: 1rem;
+}
+
+.messageContainer_currentUser,
+.messageContainer_otherUser {
+  background-color: rgb(255, 107, 107);
+  color: white;
+  text-align: left;
   border-radius: 10px;
-  cursor: pointer;
-  text-align: center;
-  align-content: center;
-  transition: transform 0.3s ease;
+  padding: 0.5rem;
+  max-width: 50%;
 }
 
-.message_button {
-  background-color: green;
-  width: 5rem;
-  height: 2rem;
-  border-radius: 10px;
-  cursor: pointer;
-  text-align: center;
+.text_container {
+  grid-area: text_container;
+  margin-left: 1rem;
+  margin-right: 1rem;
   align-content: center;
-  transition: transform 0.5s ease;
 }
 
-.message_button:hover,
-.cancel_button:hover {
-  transform: scale(1.5);
+.text_area {
+  align-content: center;
+  display: flex;
+  gap: 1rem;
+}
+
+.text_input {
+  height: 3rem;
+  width: 100%;
+  border-radius: 20px;
+  border: 2px solid rgb(201, 201, 201);
+  color: black;
+  outline: none;
+}
+
+.text_input:focus {
+  border: 2px solid rgb(255, 107, 107);
+  outline: none;
+}
+
+.send_button {
+  height: 3rem;
+  width: 3rem;
+  border-radius: 50%;
+  background-color: rgb(255, 107, 107);
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.45);
+  border: none;
+  color: white;
+  cursor: pointer;
+  transition:
+    color 0.5s ease,
+    box-shadow 0.5s ease,
+    background-color 0.5s ease;
+}
+
+.send_button:hover {
+  box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.3);
+  background-color: white;
+  color: rgb(255, 107, 107);
 }
 
 .footer {
@@ -359,22 +332,85 @@
     font-size: 0.5rem;
   }
 
-  .card_container {
-    height: 50%;
-    width: 80%;
+  .chats {
+    font-size: 0.7rem;
+  }
+
+  .font_size1 {
+    font-size: 1rem;
+  }
+
+  .profile2 {
+    width: 30px;
+    height: 30px;
+  }
+
+  .messages {
+    grid-template-rows: 5rem 70.5vh 5rem;
+  }
+
+  .messageContainer_currentUser,
+  .messageContainer_otherUser {
+    font-size: 0.5rem;
   }
 }
 
 @media screen and (max-width: 1000px) and (orientation: landscape) {
-  .parent_grid {
-    grid-template-rows: 6rem 30rem;
+  .website_title {
+    font-size: 1rem;
   }
 
-  .navBar {
-    position: fixed;
+  .website_title img {
+    width: 3rem;
   }
 
-  .userButtonFloat {
-    top: 2rem;
+  .button1 {
+    width: 3rem;
+    font-size: 0.5rem;
+  }
+
+  .button1_active {
+    width: 3rem;
+    font-size: 0.5rem;
+  }
+
+  .chats {
+    font-size: 0.7rem;
+  }
+
+  .font_size1 {
+    font-size: 1rem;
+  }
+
+  .profile2 {
+    width: 30px;
+    height: 30px;
+  }
+
+  .messages {
+    grid-template-rows: 5rem 38vh 5rem;
+  }
+
+  .messageContainer_currentUser,
+  .messageContainer_otherUser {
+    font-size: 0.5rem;
+  }
+}
+
+@media screen and (max-width: 850px) and (orientation: landscape) {
+  .messages {
+    grid-template-rows: 3rem 37vh 5rem;
+  }
+}
+
+@media screen and (max-width: 400px) and (orientation: portrait) {
+  .messages {
+    grid-template-rows: 5rem 60vh 5rem;
+  }
+}
+
+@media screen and (max-width: 360px) and (orientation: portrait) {
+  .messages {
+    grid-template-rows: 5rem 64vh 5rem;
   }
 }

@@ -3,8 +3,8 @@
 import { SignedIn, UserButton } from "@clerk/nextjs";
 import styles3 from "./style3.module.css";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { getDogImage, getDogInfo } from "~/server/queries";
+import { useEffect, useRef, useState } from "react";
+import { getMatches, getDogImage, getDogInfo } from "~/server/queries";
 import { acceptDog, rejectDog } from "~/server/action";
 
 export const dynamic = "force-dynamic";
@@ -15,6 +15,20 @@ export default function Date() {
   const [matchDog, setMatchDog] = useState<null | (typeof dogs)[0]>(null);
 
   const [dogs, setDogs] = useState<
+    {
+      id: number;
+      name_dog: string;
+      age: number;
+      gender: string;
+      breed: string;
+      location: string;
+      url: string;
+    }[]
+  >([]);
+
+  const lastMatchIdRef = useRef<number | null>(null);
+
+  const combinedRef = useRef<
     {
       id: number;
       name_dog: string;
@@ -40,12 +54,50 @@ export default function Date() {
       });
 
       setDogs(combined);
+      combinedRef.current = combined;
+
+      // ✅ Load stored matchDog from localStorage
+      const storedMatch = localStorage.getItem("matchDog");
+      if (storedMatch) {
+        try {
+          const parsed = JSON.parse(storedMatch);
+          setMatchDog(parsed);
+        } catch {
+          localStorage.removeItem("matchDog");
+        }
+      }
 
       const res = await fetch("/api/currentDogID");
       const data = await res.json();
 
-      setCurrentDogId(data.currentDogId);
+      const currentDogId = data.currentDogId;
+      setCurrentDogId(currentDogId);
+
+      if (currentDogId) {
+        const interval = setInterval(async () => {
+          const matchList = await getMatches(currentDogId);
+          const latest = matchList[matchList.length - 1];
+
+          if (latest && latest.id !== lastMatchIdRef.current) {
+            const matchDogId =
+              latest.dog1_id === currentDogId ? latest.dog2_id : latest.dog1_id;
+
+            const matchedDog = combinedRef.current.find(
+              (dog) => dog.id === matchDogId,
+            );
+
+            if (matchedDog) {
+              setMatchDog(matchedDog);
+              localStorage.setItem("matchDog", JSON.stringify(matchedDog));
+              lastMatchIdRef.current = latest.id;
+            }
+          }
+        }, 5000);
+
+        return () => clearInterval(interval);
+      }
     };
+
     fetchData();
   }, []);
 
@@ -93,7 +145,9 @@ export default function Date() {
             </div>
             <div className={styles3.buttons_container}>
               <div className={styles3.button1_active}>Date</div>
-              <div className={styles3.button1}>Message</div>
+              <div className={styles3.button1}>
+                <Link href={"./message"}>Message</Link>
+              </div>
             </div>
           </nav>
 
@@ -147,7 +201,7 @@ export default function Date() {
               className={`${styles3.alert_container} ${matchDog ? styles3.show : ""}`}
             >
               {matchDog && (
-                <div className={styles3.alert}>
+                <div className={styles3.alert} key={matchDog.id}>
                   <h1>🎉 It's A Match!</h1>
 
                   <p>You Can Now Message {matchDog.name_dog}.</p>
@@ -159,11 +213,28 @@ export default function Date() {
                   <div className={styles3.alert_buttons}>
                     <div
                       className={styles3.cancel_button}
-                      onClick={() => setMatchDog(null)}
+                      onClick={() => {
+                        setMatchDog(null);
+                        localStorage.removeItem("matchDog");
+                      }}
                     >
                       Cancel
                     </div>
-                    <div className={styles3.message_button}>Message</div>
+                    <div
+                      className={styles3.message_button}
+                      onClick={() => {
+                        if (!matchDog) return;
+                        localStorage.removeItem("matchDog");
+                        const query = new URLSearchParams({
+                          matchId: matchDog.id.toString(),
+                          matchName: matchDog.name_dog,
+                          matchUrl: matchDog.url,
+                        }).toString();
+                        window.location.href = `/message?${query}`;
+                      }}
+                    >
+                      Message
+                    </div>
                   </div>
                 </div>
               )}

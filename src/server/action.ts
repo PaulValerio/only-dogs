@@ -16,6 +16,8 @@ export async function acceptDog(currentDogId: number, targetDogId: number) {
     .from(decision)
     .where(and(eq(decision.from, targetDogId), eq(decision.to, currentDogId)));
 
+  console.log(mutual.length);
+
   if (mutual.length > 0) {
     const [currentDog] = await db
       .select()

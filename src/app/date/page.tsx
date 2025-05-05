@@ -56,7 +56,6 @@ export default function Date() {
       setDogs(combined);
       combinedRef.current = combined;
 
-      // ✅ Load stored matchDog from localStorage
       const storedMatch = localStorage.getItem("matchDog");
       if (storedMatch) {
         try {

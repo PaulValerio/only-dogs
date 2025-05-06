@@ -176,12 +176,12 @@
 .chats {
   grid-area: chats;
   display: block;
-  margin-left: 1rem;
   border-right: 2px solid rgb(201, 201, 201);
 }
 
 .font_size1 {
   font-size: 1.5rem;
+  margin-left: 1rem;
 }
 
 .chats_content {
@@ -190,7 +190,42 @@
   height: calc(100vh - 12rem);
 }
 
+.highlight {
+  background-color: rgba(255, 107, 107, 0.2);
+  border-left: 3px solid rgb(255, 107, 107);
+}
+
+.no_highlight {
+  position: relative;
+}
+
+.no_highlight::before {
+  content: " ";
+  position: absolute;
+  background-color: rgba(255, 107, 107, 0);
+  width: 0%;
+  height: 100%;
+  border-left: 3px solid rgba(255, 107, 107, 0);
+  transition:
+    width 0.5s ease,
+    background-color 0.5s ease,
+    border-left 0.5s ease;
+}
+
+.no_highlight:hover::before {
+  background-color: rgba(255, 107, 107, 0.2);
+  width: 100%;
+  border-left: 3px solid rgb(255, 107, 107);
+}
+
 .flex1 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: 1rem;
+}
+
+.flex2 {
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -249,6 +284,7 @@
 .messageContainer_currentUser,
 .messageContainer_otherUser {
   background-color: rgb(255, 107, 107);
+  font-size: 1rem;
   color: white;
   text-align: left;
   border-radius: 10px;

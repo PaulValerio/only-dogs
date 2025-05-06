@@ -54,9 +54,12 @@ export default function Date() {
       });
 
       setDogs(combined);
+      console.log("combined" + [combined]);
       combinedRef.current = combined;
+      console.log("combinedRef" + [combinedRef]);
 
       const storedMatch = localStorage.getItem("matchDog");
+      
       if (storedMatch) {
         try {
           const parsed = JSON.parse(storedMatch);

@@ -2,7 +2,7 @@
 
 import { db } from "./db";
 import { decision, matches, dog_info } from "./db/schema";
-import { and, eq } from "drizzle-orm";
+import { and, eq, like } from "drizzle-orm";
 
 export async function acceptDog(currentDogId: number, targetDogId: number) {
   await db.insert(decision).values({
@@ -14,9 +14,11 @@ export async function acceptDog(currentDogId: number, targetDogId: number) {
   const mutual = await db
     .select()
     .from(decision)
-    .where(and(eq(decision.from, targetDogId), eq(decision.to, currentDogId)));
-
-  console.log(mutual.length);
+    .where(and(
+      eq(decision.from, targetDogId),
+      eq(decision.to, currentDogId),
+      like(decision.event, `%accepted%`)
+    ));
 
   if (mutual.length > 0) {
     const [currentDog] = await db

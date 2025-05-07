@@ -110,8 +110,9 @@ export default function MatchChat() {
                 key={match.id}
               >
                 <div
-                  className={isActive ? styles4.highlight : styles4.no_highlight}
-                  style={{ textDecoration: "none", color: "inherit" }}
+                  className={
+                    isActive ? styles4.highlight : styles4.no_highlight
+                  }
                 >
                   <div className={styles4.flex1}>
                     <img
@@ -136,7 +137,11 @@ export default function MatchChat() {
               alt="Match Profile"
               className={styles4.profile2}
             />
-            <h1 className={styles4.font_size1}>{matchName}</h1>
+            <h1 className={styles4.font_size1}>
+              {matchName === "No Matched Yet!"
+                ? "Select Who To Chat"
+                : matchName}
+            </h1>
           </div>
         </div>
 

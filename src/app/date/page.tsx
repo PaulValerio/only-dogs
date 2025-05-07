@@ -54,12 +54,10 @@ export default function Date() {
       });
 
       setDogs(combined);
-      console.log("combined" + [combined]);
       combinedRef.current = combined;
-      console.log("combinedRef" + [combinedRef]);
 
       const storedMatch = localStorage.getItem("matchDog");
-      
+
       if (storedMatch) {
         try {
           const parsed = JSON.parse(storedMatch);
@@ -148,7 +146,22 @@ export default function Date() {
             <div className={styles3.buttons_container}>
               <div className={styles3.button1_active}>Date</div>
               <div className={styles3.button1}>
-                <Link href={"./message"}>Message</Link>
+                {matchDog ? (
+                  <Link
+                    href={{
+                      pathname: "/message",
+                      query: {
+                        matchId: matchDog.id,
+                        matchName: matchDog.name_dog,
+                        matchUrl: matchDog.url,
+                      },
+                    }}
+                  >
+                    Message
+                  </Link>
+                ) : (
+                  <Link href="/message">Message</Link>
+                )}
               </div>
             </div>
           </nav>

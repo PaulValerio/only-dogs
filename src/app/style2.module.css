@@ -64,6 +64,12 @@
   font-size: 1rem;
 }
 
+.userButtonFloat {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+}
+
 .container1 {
   text-align: center;
   justify-items: center;
@@ -86,7 +92,7 @@
   border: 0px solid rgba(255, 255, 255, 0);
 }
 
-.location_input {
+.location_gender_input {
   position: relative;
   background: none;
   border: none;
@@ -97,7 +103,7 @@
   padding-left: 1.3rem;
 }
 
-.location_input option {
+.location_gender_input option {
   color: black;
   font-size: 1rem;
   line-height: 2rem;
@@ -136,31 +142,45 @@
 }
 
 .toast {
+  position: absolute;
+  bottom: 0rem;
+  right: 0rem;
   background-color: white;
   color: black;
+  width: max-content;
   padding: 1rem 1.5rem;
   border-radius: 0.5rem;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
   opacity: 1;
   animation: fadeInOut 4s ease forwards;
+  transition:
+    transform 0.5s ease;
+}
+
+.toast:hover {
+  transform: translateY(-1rem);
 }
 
 @keyframes fadeInOut {
   0% {
     opacity: 0;
-    transform: translateY(20px);
+    bottom: 0rem;
+    right: 0rem;
   }
   10% {
     opacity: 1;
-    transform: translateY(0);
+    bottom: 0.5rem;
+    right: 0.5rem;
   }
   90% {
     opacity: 1;
-    transform: translateY(0);
+    bottom: 0.5rem;
+    right: 0.5rem;
   }
   100% {
     opacity: 0;
-    transform: translateY(-20px);
+    bottom: 1rem;
+    right: 1rem;
   }
 }
 

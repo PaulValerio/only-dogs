@@ -1,6 +1,6 @@
 "use client";
 
-import { SignedOut, SignUpButton, SignedIn } from "@clerk/nextjs";
+import { SignedOut, SignUpButton, SignedIn, UserButton } from "@clerk/nextjs";
 import styles1 from "./style1.module.css";
 import styles2 from "./style2.module.css";
 import { useUploadThing } from "~/utils/uploadthing";
@@ -52,6 +52,24 @@ export default function Home() {
     },
   });
 
+  const checkString = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const gender = e.target.value;
+
+    if (/^\d+$/.test(gender)) {
+      showToast("❌ Input should not be a number");
+      e.target.value = "";
+    }
+  };
+
+  const checkDogAge = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const age = Number(e.target.value);
+
+    if (isNaN(age)) {
+      showToast("❌ Please enter a valid age");
+      e.target.value = "";
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -90,6 +108,13 @@ export default function Home() {
       <SignedOut>
         <main className={styles1.main}>
           <section className={styles1.parent_grid}>
+            <input
+              type="checkbox"
+              id="toggle"
+              className={styles1.toggle}
+              hidden
+            />
+
             <nav className={styles1.navBar}>
               <div className={styles1.website_title}>
                 <img src="/images/HomeLogo.png" alt="NoLogo" />
@@ -112,6 +137,13 @@ export default function Home() {
                 </div>
               </SignUpButton>
             </nav>
+
+            <input
+              type="checkbox"
+              id="toggle"
+              className={styles1.toggle}
+              hidden
+            />
 
             <div className={styles1.body}>
               <div className={styles1.content1}>
@@ -265,6 +297,33 @@ export default function Home() {
                   </div>
                 </div>
               </div>
+
+              <div className={styles1.toggle_container}>
+                <label htmlFor="toggle" className={styles1.light_darkMode}>
+                  <div className={styles1.sun_moon}></div>
+
+                  <div className={styles1.cloud1}>
+                    <i className="fa-solid fa-cloud"></i>
+                  </div>
+                  <div className={styles1.cloud2}>
+                    <i className="fa-solid fa-cloud"></i>
+                  </div>
+
+                  <div className={styles1.moon_crater1}></div>
+                  <div className={styles1.moon_crater2}></div>
+                  <div className={styles1.moon_crater3}></div>
+
+                  <div className={styles1.star1}>
+                    <i className="fa-solid fa-star"></i>
+                  </div>
+                  <div className={styles1.star2}>
+                    <i className="fa-solid fa-star"></i>
+                  </div>
+                  <div className={styles1.star3}>
+                    <i className="fa-solid fa-star"></i>
+                  </div>
+                </label>
+              </div>
             </div>
 
             <footer className={styles1.footer}>
@@ -276,6 +335,10 @@ export default function Home() {
 
       <SignedIn>
         <main className={styles2.main}>
+          <div className={styles2.userButtonFloat}>
+            <UserButton />
+          </div>
+
           <div className={styles2.container1}>
             <h1>
               Welcome to <span className={styles2.span}>Only</span>
@@ -290,6 +353,7 @@ export default function Home() {
                   <input
                     type="text"
                     required
+                    onChange={checkString}
                     className={styles2.user_input}
                     id="dog-name"
                     name="dog-name"
@@ -309,6 +373,7 @@ export default function Home() {
                   <input
                     type="text"
                     required
+                    onChange={checkDogAge}
                     className={styles2.user_input}
                     id="dog-age"
                     name="dog-age"
@@ -328,25 +393,7 @@ export default function Home() {
                   <input
                     type="text"
                     required
-                    className={styles2.user_input}
-                    id="dog-gender"
-                    name="dog-gender"
-                    placeholder=" "
-                  />
-
-                  <div className={styles2.user_icon1}>
-                    <i className="fa-solid fa-venus-mars fa-2xs"></i>
-                  </div>
-
-                  <div className={styles2.user_label}>
-                    <label htmlFor="dog-gender">Gender</label>
-                  </div>
-                </div>
-
-                <div className={styles2.flex1}>
-                  <input
-                    type="text"
-                    required
+                    onChange={checkString}
                     className={styles2.user_input}
                     id="dog-breed"
                     name="dog-breed"
@@ -359,6 +406,28 @@ export default function Home() {
 
                   <div className={styles2.user_label}>
                     <label htmlFor="dog-breed">Breed</label>
+                  </div>
+                </div>
+
+                <div className={styles2.flex1}>
+                  <div className={styles2.border_bottom1}>
+                    <select
+                      required
+                      className={styles2.location_gender_input}
+                      id="dog-gender"
+                      name="dog-gender"
+                      defaultValue=""
+                    >
+                      <option value="" disabled hidden>
+                        Select Gender
+                      </option>
+                      <option value="Male">Male</option>
+                      <option value="Female">Female</option>
+                    </select>
+                  </div>
+
+                  <div className={styles2.user_icon1}>
+                    <i className="fa-solid fa-venus-mars fa-2xs"></i>
                   </div>
                 </div>
 
@@ -382,7 +451,7 @@ export default function Home() {
                   <div className={styles2.border_bottom1}>
                     <select
                       required
-                      className={styles2.location_input}
+                      className={styles2.location_gender_input}
                       id="location"
                       name="location"
                       defaultValue=""
@@ -430,9 +499,13 @@ export default function Home() {
               </button>
             </form>
           </div>
+
           <div id="toast-container" className={styles2.toast_container}></div>
         </main>
       </SignedIn>
     </main>
   );
+}
+function async(arg0: (e: any) => void) {
+  throw new Error("Function not implemented.");
 }

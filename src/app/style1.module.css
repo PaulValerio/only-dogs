@@ -27,6 +27,10 @@
   align-items: center;
   z-index: 3;
   box-shadow: 0 2px 10px 0px rgba(0, 0, 0, 0.45);
+  transition:
+    color 0.5s ease,
+    box-shadow 0.5s ease,
+    background-color 0.5s ease;
 }
 
 .navBar img {
@@ -40,10 +44,12 @@
   color: white;
   font-size: x-large;
   gap: 1rem;
+  transition: color 0.5s ease;
 }
 
 .website_title span {
   color: rgb(116, 197, 255);
+  transition: color 0.5s ease;
 }
 
 .title_wrap {
@@ -108,7 +114,6 @@
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.45);
   transition:
     color 0.5s ease,
-    box-shadow 0.5s ease,
     background-color 0.5s ease;
 }
 
@@ -117,7 +122,6 @@
 }
 
 .login_button:hover {
-  box-shadow: inset 0px 0px 10px black;
   background-color: white;
   color: rgb(255, 107, 107);
 }
@@ -176,7 +180,9 @@
   box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.25);
   transition:
     transform 0.5s ease,
-    box-shadow 0.5s ease;
+    box-shadow 0.5s ease,
+    color 0.5s ease,
+    background-color 0.5s ease;
 }
 
 .card1:hover {
@@ -231,6 +237,217 @@
   width: 100%;
   border-radius: 5px;
   background: linear-gradient(to right, rgb(255, 107, 107), rgb(116, 197, 255));
+}
+
+.toggle_container {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  width: 5rem;
+  overflow: hidden;
+  border-radius: 10px;
+  border: 3px solid rgba(0, 0, 0, 0.5);
+  transition: border 0.5s ease;
+}
+
+.light_darkMode {
+  position: relative;
+  background-color: skyblue;
+  width: 5rem;
+  height: 1rem;
+  display: flex;
+  transition: background-color 0.5s ease;
+  cursor: pointer;
+}
+
+.sun_moon {
+  position: absolute;
+  background-color: yellow;
+  box-shadow: 0px 0px 10px gold;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  transition:
+    transform 0.5s ease,
+    background-color 0.5s ease,
+    box-shadow 0.5s ease;
+}
+
+.cloud1 {
+  position: absolute;
+  top: -1px;
+  left: 2.3rem;
+  font-size: 0.8rem;
+  color: white;
+  transition: transform 0.5s ease;
+}
+
+.cloud2 {
+  position: absolute;
+  top: 4px;
+  left: 3.5rem;
+  font-size: 0.8rem;
+  color: white;
+  transition: transform 0.5s ease;
+}
+
+.moon_crater1 {
+  position: absolute;
+  height: 0.3rem;
+  width: 0.3rem;
+  top: 3px;
+  left: 3rem;
+  content: " ";
+  border-radius: 50%;
+  background-color: rgba(119, 136, 153, 0.2);
+  visibility: hidden;
+}
+
+.moon_crater2 {
+  position: absolute;
+  height: 0.3rem;
+  width: 0.3rem;
+  top: 10px;
+  left: 3.4rem;
+  content: " ";
+  border-radius: 50%;
+  background-color: rgba(119, 136, 153, 0.2);
+  visibility: hidden;
+}
+
+.moon_crater3 {
+  position: absolute;
+  height: 0.3rem;
+  width: 0.3rem;
+  top: 7px;
+  left: 4rem;
+  content: " ";
+  border-radius: 50%;
+  background-color: rgba(119, 136, 153, 0.2);
+  visibility: hidden;
+}
+
+.star1 {
+  position: absolute;
+  top: 2px;
+  left: 1rem;
+  font-size: 0.3rem;
+  color: lightgray;
+  transform: translateX(-3rem);
+  transition: transform 0.5s ease;
+}
+
+.star2 {
+  position: absolute;
+  top: 5px;
+  left: 1.8rem;
+  font-size: 0.3rem;
+  color: lightgray;
+  transform: translateX(-4.5rem);
+  transition: transform 0.5s ease;
+}
+
+.star3 {
+  position: absolute;
+  top: 8px;
+  left: 0.3rem;
+  font-size: 0.3rem;
+  color: lightgray;
+  transform: translateX(-1.5rem);
+  transition: transform 0.5s ease;
+}
+
+.toggle:checked ~ .navBar {
+  background-color: rgb(116, 197, 255);
+  box-shadow: 0px 2px 10px 0px rgba(255, 255, 255, 0.5);
+}
+
+.toggle:checked ~ .navBar > .website_title {
+  color: rgb(255, 107, 107);
+}
+
+.toggle:checked ~ .navBar > .website_title span {
+  color: white;
+}
+
+.toggle:checked ~ .navBar > .website_title > .title_wrap > .dogstyle {
+  border-right: 2px solid black;
+}
+
+.toggle:checked ~ .navBar > .login_button {
+  background-color: rgb(116, 197, 255);
+  color: black;
+}
+
+.toggle:checked ~ .navBar > .login_button:hover {
+  background-color: rgb(42, 42, 42);
+  color: rgb(116, 197, 255);
+}
+
+.toggle:checked ~ .body {
+  background-color: rgb(42, 42, 42);
+  color: white;
+}
+
+.toggle:checked ~ .body > .content1 {
+  background: linear-gradient(
+    135deg,
+    rgba(135, 207, 235, 0.8),
+    rgba(0, 47, 255, 0.2)
+  );
+}
+
+.toggle:checked ~ .body > .content2 > .h1::after {
+  background: linear-gradient(
+    to right,
+    rgb(135, 207, 235),
+    rgb(0, 47, 255)
+  );
+}
+
+.toggle:checked ~ .body > .content2 > .cards1 > .card1 {
+  background-color: rgb(116, 197, 255);
+  color: black;
+}
+
+.toggle:checked ~ .body > .content3 > .h1::after {
+  background: linear-gradient(
+    to right,
+    rgb(135, 207, 235),
+    rgb(0, 47, 255)
+  );
+}
+
+.toggle:checked ~ .body > .content3 > .cards1 > .card1 {
+  background-color: rgb(116, 197, 255);
+  color: black;
+}
+
+.toggle:checked ~ .body > .toggle_container > .light_darkMode {
+  background-color: black;
+}
+
+.toggle:checked ~ .body > .toggle_container > .light_darkMode > .sun_moon,
+.toggle:checked ~ .body > .toggle_container > .light_darkMode > .cloud1,
+.toggle:checked ~ .body > .toggle_container > .light_darkMode > .cloud2 {
+  transform: translateX(2.6rem);
+}
+
+.toggle:checked ~ .body > .toggle_container > .light_darkMode > .sun_moon {
+  background-color: lightgray;
+  box-shadow: 0px 0px 10px darkgrey;
+}
+
+.toggle:checked ~ .body > .toggle_container > .light_darkMode > .moon_crater1,
+.toggle:checked ~ .body > .toggle_container > .light_darkMode > .moon_crater2,
+.toggle:checked ~ .body > .toggle_container > .light_darkMode > .moon_crater3 {
+  visibility: visible;
+}
+
+.toggle:checked ~ .body > .toggle_container > .light_darkMode > .star1,
+.toggle:checked ~ .body > .toggle_container > .light_darkMode > .star2,
+.toggle:checked ~ .body > .toggle_container > .light_darkMode > .star3 {
+  transform: translateX(0rem);
 }
 
 .footer {

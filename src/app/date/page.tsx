@@ -129,6 +129,13 @@ export default function Date() {
     <main className={styles3.main}>
       <SignedIn>
         <section className={styles3.parent_grid}>
+          <input
+            type="checkbox"
+            id="toggle"
+            className={styles3.toggle}
+            hidden
+          />
+
           <nav className={styles3.navBar}>
             <div className={styles3.website_title}>
               <img src="/images/HomeLogo.png" alt="NoLogo" />
@@ -143,6 +150,7 @@ export default function Date() {
                 </h1>
               </div>
             </div>
+            
             <div className={styles3.buttons_container}>
               <div className={styles3.button1_active}>Date</div>
               <div className={styles3.button1}>
@@ -169,6 +177,13 @@ export default function Date() {
           <div className={styles3.userButtonFloat}>
             <UserButton />
           </div>
+
+          <input
+            type="checkbox"
+            id="toggle"
+            className={styles3.toggle}
+            hidden
+          />
 
           <div className={styles3.body}>
             <div
@@ -253,6 +268,33 @@ export default function Date() {
                   </div>
                 </div>
               )}
+            </div>
+
+            <div className={styles3.toggle_container}>
+              <label htmlFor="toggle" className={styles3.light_darkMode}>
+                <div className={styles3.sun_moon}></div>
+
+                <div className={styles3.cloud1}>
+                  <i className="fa-solid fa-cloud"></i>
+                </div>
+                <div className={styles3.cloud2}>
+                  <i className="fa-solid fa-cloud"></i>
+                </div>
+
+                <div className={styles3.moon_crater1}></div>
+                <div className={styles3.moon_crater2}></div>
+                <div className={styles3.moon_crater3}></div>
+
+                <div className={styles3.star1}>
+                  <i className="fa-solid fa-star"></i>
+                </div>
+                <div className={styles3.star2}>
+                  <i className="fa-solid fa-star"></i>
+                </div>
+                <div className={styles3.star3}>
+                  <i className="fa-solid fa-star"></i>
+                </div>
+              </label>
             </div>
           </div>
 

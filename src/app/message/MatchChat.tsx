@@ -94,90 +94,120 @@ export default function MatchChat() {
   };
 
   return (
-    <div className={styles4.grid1}>
-      <aside className={styles4.chats}>
-        <h1 className={styles4.font_size1}>Chats</h1>
+    <div className={styles4.body}>
+      <div className={styles4.grid1}>
+        <aside className={styles4.chats}>
+          <h1 className={styles4.font_size1}>Chats</h1>
 
-        <div className={styles4.chats_content}>
-          {matches.map((match) => {
-            const isActive = match.id === Number(matchId);
+          <div className={styles4.chats_content}>
+            {matches.map((match) => {
+              const isActive = match.id === Number(matchId);
 
-            return (
-              <Link
-                href={`/message?matchId=${match.id}&matchName=${encodeURIComponent(
-                  match.name,
-                )}&matchUrl=${encodeURIComponent(match.imageUrl)}`}
-                key={match.id}
-              >
-                <div
-                  className={
-                    isActive ? styles4.highlight : styles4.no_highlight
-                  }
+              return (
+                <Link
+                  href={`/message?matchId=${match.id}&matchName=${encodeURIComponent(
+                    match.name,
+                  )}&matchUrl=${encodeURIComponent(match.imageUrl)}`}
+                  key={match.id}
                 >
-                  <div className={styles4.flex1}>
-                    <img
-                      src={match.imageUrl}
-                      alt={match.name}
-                      className={styles4.profile1}
-                    />
-                    <h1>{match.name}</h1>
+                  <div
+                    className={
+                      isActive ? styles4.highlight : styles4.no_highlight
+                    }
+                  >
+                    <div className={styles4.flex1}>
+                      <img
+                        src={match.imageUrl}
+                        alt={match.name}
+                        className={styles4.profile1}
+                      />
+                      <h1>{match.name}</h1>
+                    </div>
                   </div>
-                </div>
-              </Link>
-            );
-          })}
-        </div>
-      </aside>
+                </Link>
+              );
+            })}
+          </div>
+        </aside>
 
-      <div className={styles4.messages}>
-        <div className={styles4.head}>
-          <div className={styles4.flex2}>
-            <img
-              src={matchUrl}
-              alt="Match Profile"
-              className={styles4.profile2}
-            />
-            <h1 className={styles4.font_size1}>
-              {matchName === "No Matched Yet!"
-                ? "Select Who To Chat"
-                : matchName}
-            </h1>
+        <div className={styles4.messages}>
+          <div className={styles4.head}>
+            <div className={styles4.flex2}>
+              <img
+                src={matchUrl}
+                alt="Match Profile"
+                className={styles4.profile2}
+              />
+              <h1 className={styles4.font_size1}>
+                {matchName === "No Matched Yet!"
+                  ? "Select Who To Chat"
+                  : matchName}
+              </h1>
+            </div>
+          </div>
+
+          <div className={styles4.message_area}>
+            {currentUserId !== null &&
+              messages.map((msg) =>
+                msg.sender_id === currentUserId ? (
+                  <div key={msg.id} className={styles4.message_currentUser}>
+                    <div className={styles4.messageContainer_currentUser}>
+                      <p>{msg.message}</p>
+                    </div>
+                  </div>
+                ) : (
+                  <div key={msg.id} className={styles4.message_otherUser}>
+                    <div className={styles4.messageContainer_otherUser}>
+                      <p>{msg.message}</p>
+                    </div>
+                  </div>
+                ),
+              )}
+          </div>
+
+          <div className={styles4.text_container}>
+            <div className={styles4.text_area}>
+              <input
+                type="text"
+                value={currentMessage}
+                onChange={(e) => setCurrentMessage(e.target.value)}
+                className={styles4.text_input}
+                placeholder="Type a message..."
+              />
+              
+              <button className={styles4.send_button} onClick={sendMessage}>
+                ➤
+              </button>
+            </div>
           </div>
         </div>
+      </div>
 
-        <div className={styles4.message_area}>
-          {currentUserId !== null &&
-            messages.map((msg) =>
-              msg.sender_id === currentUserId ? (
-                <div key={msg.id} className={styles4.message_currentUser}>
-                  <div className={styles4.messageContainer_currentUser}>
-                    <p>{msg.message}</p>
-                  </div>
-                </div>
-              ) : (
-                <div key={msg.id} className={styles4.message_otherUser}>
-                  <div className={styles4.messageContainer_otherUser}>
-                    <p>{msg.message}</p>
-                  </div>
-                </div>
-              ),
-            )}
-        </div>
+      <div className={styles4.toggle_container}>
+        <label htmlFor="toggle" className={styles4.light_darkMode}>
+          <div className={styles4.sun_moon}></div>
 
-        <div className={styles4.text_container}>
-          <div className={styles4.text_area}>
-            <input
-              type="text"
-              value={currentMessage}
-              onChange={(e) => setCurrentMessage(e.target.value)}
-              className={styles4.text_input}
-              placeholder="Type a message..."
-            />
-            <button className={styles4.send_button} onClick={sendMessage}>
-              ➤
-            </button>
+          <div className={styles4.cloud1}>
+            <i className="fa-solid fa-cloud"></i>
           </div>
-        </div>
+          <div className={styles4.cloud2}>
+            <i className="fa-solid fa-cloud"></i>
+          </div>
+
+          <div className={styles4.moon_crater1}></div>
+          <div className={styles4.moon_crater2}></div>
+          <div className={styles4.moon_crater3}></div>
+
+          <div className={styles4.star1}>
+            <i className="fa-solid fa-star"></i>
+          </div>
+          <div className={styles4.star2}>
+            <i className="fa-solid fa-star"></i>
+          </div>
+          <div className={styles4.star3}>
+            <i className="fa-solid fa-star"></i>
+          </div>
+        </label>
       </div>
     </div>
   );

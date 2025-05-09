@@ -11,6 +11,13 @@ export default function Message() {
     <main className={styles4.main}>
       <SignedIn>
         <section className={styles4.parent_grid}>
+          <input
+            type="checkbox"
+            id="toggle"
+            className={styles4.toggle}
+            hidden
+          />
+
           <nav className={styles4.navBar}>
             <div className={styles4.website_title}>
               <img src="/images/HomeLogo.png" alt="NoLogo" />
@@ -37,11 +44,17 @@ export default function Message() {
             <UserButton />
           </div>
 
-          <div className={styles4.body}>
-            <Suspense fallback={<div>Loading chat...</div>}>
-              <MatchChat />
-            </Suspense>
-          </div>
+          <input
+            type="checkbox"
+            id="toggle"
+            className={styles4.toggle}
+            hidden
+          />
+
+          <Suspense fallback={<div>Loading chat...</div>}>
+            <MatchChat />
+          </Suspense>
+
 
           <footer className={styles4.footer}>
             © 2025 OnlyDogs. All rights reserved.

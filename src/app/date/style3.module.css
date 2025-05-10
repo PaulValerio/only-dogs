@@ -253,9 +253,8 @@
 }
 
 .reject_button {
-  background-color: red;
-  width: 2rem;
-  height: 2rem;
+  color: red;
+  font-size: 2rem;
   border-radius: 50%;
   cursor: pointer;
   text-align: center;
@@ -264,15 +263,13 @@
 }
 
 .accept_button {
-  background-color: green;
-  width: 2rem;
-  height: 2rem;
-  font-size: 1.2rem;
+  color: red;
+  font-size: 2rem;
   border-radius: 50%;
   cursor: pointer;
   text-align: center;
   align-content: center;
-  transition: transform 0.5s ease;
+  transition: transform 0.3s ease;
 }
 
 .accept_button:hover,
@@ -355,6 +352,83 @@
 .message_button:hover,
 .cancel_button:hover {
   transform: scale(1.5);
+}
+
+.heart_container {
+  visibility: hidden;
+  position: absolute;
+  bottom: -50rem;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  visibility: visible;
+  font-size: 5rem;
+  display: flex;
+  z-index: 10;
+  transition: visibility 0.5s ease;
+}
+
+.animate div {
+  visibility: visible;
+  animation: flying 5s ease infinite;
+}
+
+@keyframes flying {
+  10% {
+    font-size: 2rem;
+  }
+  25% {
+    font-size: 5rem;
+  }
+  50% {
+    font-size: 2rem;
+  }
+  75% {
+    font-size: 5rem;
+  }
+  90% {
+    font-size: 2rem;
+  }
+  100% {
+    font-size: 5rem;
+  }
+
+  from {
+    transform: translateY(-25rem);
+  }
+  to {
+    transform: translateY(-100rem);
+  }
+}
+
+.heart_container div:nth-child(1) {
+  animation-delay: 2s;
+}
+.heart_container div:nth-child(2) {
+  animation-delay: 4s;
+}
+.heart_container div:nth-child(3) {
+  animation-delay: 6s;
+}
+.heart_container div:nth-child(4) {
+  animation-delay: 8s;
+}
+.heart_container div:nth-child(5) {
+  animation-delay: 10s;
+}
+.heart_container div:nth-child(6) {
+  animation-delay: 2s;
+}
+.heart_container div:nth-child(7) {
+  animation-delay: 4s;
+}
+.heart_container div:nth-child(8) {
+  animation-delay: 6s;
+}
+.heart_container div:nth-child(9) {
+  animation-delay: 8s;
+}
+.heart_container div:nth-child(10) {
+  animation-delay: 10s;
 }
 
 .toggle_container {

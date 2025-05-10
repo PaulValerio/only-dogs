@@ -239,6 +239,7 @@
   height: 30px;
   border-radius: 50%;
   object-fit: cover;
+  cursor: default !important;
 }
 
 .messages {
@@ -264,6 +265,7 @@
   height: 50px;
   border-radius: 50%;
   object-fit: cover;
+  cursor: default !important;
 }
 
 .message_area {
@@ -516,6 +518,22 @@
   border-right: 2px solid rgb(94, 94, 94);
 }
 
+.toggle:checked ~ .body > .grid1 > .chats > .chats_content > .link > .highlight {
+  background-color: rgba(116, 197, 255, 0.2);
+  border-left: 3px solid rgb(116, 197, 255);
+}
+
+.toggle:checked
+  ~ .body
+  > .grid1
+  > .chats
+  > .chats_content
+  > .link
+  > .no_highlight:hover::before {
+  background-color: rgba(116, 197, 255, 0.2);
+  border-left: 3px solid rgb(116, 197, 255);
+}
+
 .toggle:checked
   ~ .body
   > .grid1
@@ -541,6 +559,28 @@
 
 .toggle:checked ~ .body > .grid1 > .messages > .message_area {
   background-color: rgb(64, 64, 64);
+}
+
+.toggle:checked
+  ~ .body
+  > .grid1
+  > .messages
+  > .message_area
+  > .message_currentUser
+  > .messageContainer_currentUser {
+  background-color: rgb(116, 197, 255);
+  color: black;
+}
+
+.toggle:checked
+  ~ .body
+  > .grid1
+  > .messages
+  > .message_area
+  > .message_otherUser
+  > .messageContainer_otherUser {
+  background-color: rgb(116, 197, 255);
+  color: black;
 }
 
 .toggle:checked ~ .body > .toggle_container {

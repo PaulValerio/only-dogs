@@ -150,7 +150,7 @@ export default function Date() {
                 </h1>
               </div>
             </div>
-            
+
             <div className={styles3.buttons_container}>
               <div className={styles3.button1_active}>Date</div>
               <div className={styles3.button1}>
@@ -187,6 +187,21 @@ export default function Date() {
 
           <div className={styles3.body}>
             <div
+              className={`${styles3.heart_container} ${matchDog ? styles3.animate : ""}`}
+            >
+              <div>❤️</div>
+              <div>❤️</div>
+              <div>❤️</div>
+              <div>❤️</div>
+              <div>❤️</div>
+              <div>❤️</div>
+              <div>❤️</div>
+              <div>❤️</div>
+              <div>❤️</div>
+              <div>❤️</div>
+            </div>
+
+            <div
               className={`${styles3.pageContent} ${matchDog ? styles3.blurred : ""}`}
             >
               {dogs.map((dog) => (
@@ -213,13 +228,13 @@ export default function Date() {
                         className={styles3.reject_button}
                         onClick={(e) => handleReject(e, dog.id)}
                       >
-                        ✕
+                        <i className="fa-solid fa-heart-crack"></i>
                       </div>
                       <div
                         className={styles3.accept_button}
                         onClick={(e) => handleAccept(e, dog.id)}
                       >
-                        ♥
+                        <i className="fa-solid fa-heart"></i>
                       </div>
                     </div>
                   </div>

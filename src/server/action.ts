@@ -14,11 +14,13 @@ export async function acceptDog(currentDogId: number, targetDogId: number) {
   const mutual = await db
     .select()
     .from(decision)
-    .where(and(
-      eq(decision.from, targetDogId),
-      eq(decision.to, currentDogId),
-      like(decision.event, `%accepted%`)
-    ));
+    .where(
+      and(
+        eq(decision.from, targetDogId),
+        eq(decision.to, currentDogId),
+        like(decision.event, `%accepted%`),
+      ),
+    );
 
   if (mutual.length > 0) {
     const [currentDog] = await db
@@ -31,7 +33,10 @@ export async function acceptDog(currentDogId: number, targetDogId: number) {
       .from(dog_info)
       .where(eq(dog_info.id, targetDogId));
 
-    if (currentDog!.location === targetDog!.location) {
+    if (
+      currentDog!.location === targetDog!.location &&
+      currentDog!.gender !== targetDog!.gender
+    ) {
       await db.insert(matches).values({
         event: `user-${currentDogId} matched with user-${targetDogId}`,
         dog1_id: currentDogId,

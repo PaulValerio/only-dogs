@@ -109,6 +109,7 @@ export default function MatchChat() {
                     match.name,
                   )}&matchUrl=${encodeURIComponent(match.imageUrl)}`}
                   key={match.id}
+                  className={styles4.link}
                 >
                   <div
                     className={
@@ -140,7 +141,7 @@ export default function MatchChat() {
               />
               <h1 className={styles4.font_size1}>
                 {matchName === "No Matched Yet!"
-                  ? "Select Who To Chat"
+                  ? "Select a match to start chatting!"
                   : matchName}
               </h1>
             </div>

@@ -300,15 +300,82 @@
 
 .text_container {
   grid-area: text_container;
+  overflow: auto;
   margin-left: 1rem;
   margin-right: 1rem;
   align-content: center;
+}
+
+.preview {
+  margin: 0.5rem;
+  text-align: left;
+}
+
+.chatMedia {
+  max-width: 200px;
+  max-height: 200px;
+  border-radius: 8px;
+  object-fit: cover;
+  cursor: default !important;
+}
+
+.previewMedia {
+  max-width: 200px;
+  max-height: 200px;
+  position: relative;
+  border-radius: 8px;
+}
+
+.previewMedia img {
+  max-width: 200px;
+  max-height: 200px;
+  object-fit: cover;
+  cursor: default !important;
+}
+
+.close_file {
+  position: absolute;
+  right: 1px;
+  top: 1px;
+  text-align: center;
+  color: white;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background-color: rgba(255, 107, 107, 0.5);
+  font-size: 1.5rem;
+  transition: background-color 0.5s ease;
+}
+
+.close_file:hover {
+  background-color: rgb(255, 107, 107);
 }
 
 .text_area {
   align-content: center;
   display: flex;
   gap: 1rem;
+  margin: 0.5rem;
+}
+
+.file_upload {
+  height: 3rem;
+  width: 3rem;
+  border-radius: 50%;
+  color: white;
+  text-align: center;
+  align-content: center;
+  background-color: rgb(255, 107, 107);
+  transition:
+    color 0.5s ease,
+    box-shadow 0.5s ease,
+    background-color 0.5s ease;
+}
+
+.file_upload:hover {
+  box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.3);
+  background-color: white;
+  color: rgb(255, 107, 107);
 }
 
 .text_input {
@@ -344,6 +411,11 @@
   box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.3);
   background-color: white;
   color: rgb(255, 107, 107);
+}
+
+.send_button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .toggle_container {
@@ -518,7 +590,13 @@
   border-right: 2px solid rgb(94, 94, 94);
 }
 
-.toggle:checked ~ .body > .grid1 > .chats > .chats_content > .link > .highlight {
+.toggle:checked
+  ~ .body
+  > .grid1
+  > .chats
+  > .chats_content
+  > .link
+  > .highlight {
   background-color: rgba(116, 197, 255, 0.2);
   border-left: 3px solid rgb(116, 197, 255);
 }
@@ -532,6 +610,62 @@
   > .no_highlight:hover::before {
   background-color: rgba(116, 197, 255, 0.2);
   border-left: 3px solid rgb(116, 197, 255);
+}
+
+.toggle:checked
+  ~ .body
+  > .grid1
+  > .messages
+  > .text_container
+  > .preview
+  > .previewMedia
+  > .close_file {
+  color: black;
+  background-color: rgba(116, 197, 255, 0.5);
+}
+
+.toggle:checked
+  ~ .body
+  > .grid1
+  > .messages
+  > .text_container
+  > .preview
+  > .previewMedia
+  > .close_file:hover {
+  background-color: rgb(116, 197, 255);
+}
+
+.toggle:checked
+  ~ .body
+  > .grid1
+  > .messages
+  > .text_container
+  > .text_area
+  > .text_input:focus {
+  border: 2px solid rgb(116, 197, 255);
+}
+
+.toggle:checked
+  ~ .body
+  > .grid1
+  > .messages
+  > .text_container
+  > .text_area
+  > .file_upload {
+  background-color: rgb(116, 197, 255);
+  color: black;
+}
+
+.toggle:checked
+  ~ .body
+  > .grid1
+  > .messages
+  > .text_container
+  > .text_area
+  > .file_upload:hover {
+  box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.6);
+  background-color: rgb(42, 42, 42);
+  color: rgb(116, 197, 255);
 }
 
 .toggle:checked
@@ -636,6 +770,10 @@
     width: 3rem;
   }
 
+  .dogstyle {
+    width: 5.5rem;
+  }
+
   .button1 {
     width: 3rem;
     font-size: 0.5rem;
@@ -722,6 +860,10 @@
     grid-template-columns: 8rem 1fr;
   }
 
+  .dogstyle {
+    width: 5.5rem;
+  }
+
   .messages {
     grid-template-rows: 5rem 60vh 5rem;
   }
@@ -730,6 +872,10 @@
 @media screen and (max-width: 360px) and (orientation: portrait) {
   .grid1 {
     grid-template-columns: 8rem 1fr;
+  }
+
+  .dogstyle {
+    width: 5.5rem;
   }
 
   .messages {

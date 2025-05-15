@@ -18,6 +18,10 @@ export const ourFileRouter = {
       maxFileSize: "4MB",
       maxFileCount: 1,
     },
+    video: {
+      maxFileSize: "32MB",
+      maxFileCount: 1,
+    },
   })
     // Set permissions and file types for this FileRoute
     .middleware(async ({ req }) => {
@@ -32,9 +36,7 @@ export const ourFileRouter = {
     })
 
     .onUploadComplete(async ({ metadata, file }) => {
-      // This code RUNS ON YOUR SERVER after upload
       console.log("Upload complete for userId:", metadata.userId);
-
       console.log("file url", file.ufsUrl);
 
       await db.insert(image).values({
@@ -43,8 +45,12 @@ export const ourFileRouter = {
         userId: metadata.userId,
       });
 
-      // !!! Whatever is returned here is sent to the clientside `onClientUploadComplete` callback
-      return { uploadedBy: metadata.userId };
+      return {
+        uploadedBy: metadata.userId,
+        url: file.ufsUrl,
+        name: file.name,
+        type: file.type, // Important for rendering image vs video
+      };
     }),
 } satisfies FileRouter;
 

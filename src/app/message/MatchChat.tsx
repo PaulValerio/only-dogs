@@ -4,6 +4,7 @@ import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import styles4 from "./style4.module.css";
 import Link from "next/link";
+import { useUploadThing } from "~/utils/uploadthing";
 
 export default function MatchChat() {
   const searchParams = useSearchParams();
@@ -12,8 +13,20 @@ export default function MatchChat() {
   const matchUrl = searchParams.get("matchUrl") ?? "/images/defaultDog.png";
 
   const [messages, setMessages] = useState<
-    { id: number; sender_id: number; receiver_id: number; message: string }[]
+    {
+      id: number;
+      sender_id: number;
+      receiver_id: number;
+      message: string;
+      imageUrl?: string;
+      videoUrl?: string;
+    }[]
   >([]);
+
+  const [isSending, setIsSending] = useState(false);
+
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
   const [currentMessage, setCurrentMessage] = useState("");
   const [currentDogId, setCurrentDogId] = useState<number | null>(null);
@@ -75,22 +88,67 @@ export default function MatchChat() {
     return () => clearInterval(interval);
   }, [currentDogId, chatPartnerId]);
 
+  const { startUpload } = useUploadThing("imageUploader");
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setSelectedFile(file);
+
+    const fileUrl = URL.createObjectURL(file);
+    setPreviewUrl(fileUrl);
+  };
+
+  const handleCloseFile = async () => {
+    setPreviewUrl(null);
+  };
+
+  const uploadFile = async () => {
+    if (!selectedFile) return null;
+
+    const uploaded = await startUpload([selectedFile]);
+
+    if (!uploaded || uploaded.length === 0) return null;
+
+    return {
+      url: uploaded[0]!.ufsUrl,
+      type: uploaded[0]!.type,
+    };
+  };
+
   const sendMessage = async () => {
-    if (!currentMessage.trim()) return;
+    if (!currentMessage.trim() && !selectedFile) return;
 
-    await fetch("/api/message/send", {
-      method: "POST",
-      body: JSON.stringify({
-        senderId: currentUserId,
-        receiverId: chatPartnerId,
-        message: currentMessage,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    setIsSending(true);
 
-    setCurrentMessage("");
+    try {
+      let uploaded: { url: string; type: string } | null = null;
+
+      if (selectedFile) {
+        uploaded = await uploadFile();
+      }
+
+      await fetch("/api/message/send", {
+        method: "POST",
+        body: JSON.stringify({
+          senderId: currentUserId,
+          receiverId: chatPartnerId,
+          message: currentMessage,
+          imageUrl: uploaded?.type?.startsWith("image") ? uploaded.url : null,
+          videoUrl: uploaded?.type?.startsWith("video") ? uploaded.url : null,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      setCurrentMessage("");
+      setSelectedFile(null);
+      setPreviewUrl(null);
+    } finally {
+      setIsSending(false);
+    }
   };
 
   return (
@@ -149,25 +207,95 @@ export default function MatchChat() {
 
           <div className={styles4.message_area}>
             {currentUserId !== null &&
-              messages.map((msg) =>
-                msg.sender_id === currentUserId ? (
-                  <div key={msg.id} className={styles4.message_currentUser}>
-                    <div className={styles4.messageContainer_currentUser}>
-                      <p>{msg.message}</p>
+              messages.map((msg) => {
+                const isSender = msg.sender_id === currentUserId;
+
+                return (
+                  <div
+                    key={msg.id}
+                    className={
+                      isSender
+                        ? styles4.message_currentUser
+                        : styles4.message_otherUser
+                    }
+                  >
+                    <div
+                      className={
+                        isSender
+                          ? styles4.messageContainer_currentUser
+                          : styles4.messageContainer_otherUser
+                      }
+                    >
+                      {msg.message && <p>{msg.message}</p>}
+
+                      {msg.imageUrl && (
+                        <img
+                          src={msg.imageUrl}
+                          alt="sent image"
+                          className={styles4.chatMedia}
+                        />
+                      )}
+
+                      {msg.videoUrl && (
+                        <video
+                          src={msg.videoUrl}
+                          controls
+                          className={styles4.chatMedia}
+                        />
+                      )}
                     </div>
                   </div>
-                ) : (
-                  <div key={msg.id} className={styles4.message_otherUser}>
-                    <div className={styles4.messageContainer_otherUser}>
-                      <p>{msg.message}</p>
-                    </div>
-                  </div>
-                ),
-              )}
+                );
+              })}
           </div>
 
           <div className={styles4.text_container}>
+            {previewUrl && (
+              <div className={styles4.preview}>
+                {selectedFile?.type.startsWith("image") ? (
+                  <div className={styles4.previewMedia}>
+                    <img src={previewUrl} alt="Preview" />
+
+                    <div
+                      className={styles4.close_file}
+                      onClick={handleCloseFile}
+                    >
+                      <i className="fa-solid fa-xmark"></i>
+                    </div>
+                  </div>
+                ) : (
+                  <div className={styles4.previewMedia}>
+                    <video
+                      src={previewUrl}
+                      controls
+                      className={styles4.previewMedia}
+                    />
+
+                    <div
+                      className={styles4.close_file}
+                      onClick={handleCloseFile}
+                    >
+                      <i className="fa-solid fa-xmark"></i>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
             <div className={styles4.text_area}>
+              <label htmlFor="file-upload" className={styles4.file_upload}>
+                <i className="fa-solid fa-paperclip"></i>
+
+                <input
+                  type="file"
+                  accept="image/*, video/*"
+                  id="file-upload"
+                  name="file-upload"
+                  hidden
+                  onChange={handleFileChange}
+                />
+              </label>
+
               <input
                 type="text"
                 value={currentMessage}
@@ -175,9 +303,12 @@ export default function MatchChat() {
                 className={styles4.text_input}
                 placeholder="Type a message..."
               />
-              
-              <button className={styles4.send_button} onClick={sendMessage}>
-                ➤
+              <button
+                className={styles4.send_button}
+                onClick={sendMessage}
+                disabled={isSending}
+              >
+                {isSending ? "..." : "➤"}
               </button>
             </div>
           </div>

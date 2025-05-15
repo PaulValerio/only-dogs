@@ -436,6 +436,7 @@ export default function Home() {
                     <input
                       type="file"
                       required
+                      accept="image/*"
                       className={styles2.picture_input}
                       id="dog-picture"
                       name="dog-picture"

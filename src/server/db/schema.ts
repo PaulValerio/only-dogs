@@ -94,6 +94,8 @@ export const messages = createTable5(
     sender_id: d.integer().notNull(),
     receiver_id: d.integer().notNull(),
     message: d.varchar({ length: 1000 }).notNull(),
+    imageUrl: d.varchar({ length: 1024 }),
+    videoUrl: d.varchar({ length: 1024 }),
     createdAt: d
       .timestamp({ withTimezone: true })
       .default(sql`CURRENT_TIMESTAMP`)

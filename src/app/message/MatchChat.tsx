@@ -34,7 +34,7 @@ export default function MatchChat() {
   const [matches, setMatches] = useState<
     { id: number; name: string; imageUrl: string }[]
   >([]);
-
+  
   useEffect(() => {
     const fetchData = async () => {
       const res = await fetch("/api/currentDogID");
@@ -306,7 +306,9 @@ export default function MatchChat() {
               <button
                 className={styles4.send_button}
                 onClick={sendMessage}
-                disabled={isSending}
+                disabled={
+                  isSending || (!currentMessage.trim() && !selectedFile)
+                }
               >
                 {isSending ? "..." : "➤"}
               </button>

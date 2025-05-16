@@ -11,9 +11,9 @@
   height: 100vh;
   width: 100%;
   grid-template-areas:
-    "navBar navBar"
-    "body body"
-    "footer footer";
+    "navBar"
+    "body"
+    "footer";
 }
 
 .navBar {
@@ -111,35 +111,29 @@
   margin-right: 2.7rem;
 }
 
-.button1 {
-  background-color: white;
-  color: rgb(255, 107, 107);
-  align-content: center;
+.button1,
+.button1_active {
   width: 7rem;
   height: 2rem;
   border-radius: 5rem;
   margin-right: 1rem;
   cursor: pointer;
+  align-content: center;
   transition:
     color 0.5s ease,
     box-shadow 0.5s ease,
     background-color 0.5s ease;
 }
 
+.button1 {
+  background-color: white;
+  color: rgb(255, 107, 107);
+}
+
 .button1_active {
   background-color: rgb(255, 107, 107);
   color: white;
-  align-content: center;
-  width: 7rem;
-  height: 2rem;
-  border-radius: 5rem;
-  margin-right: 1rem;
-  cursor: pointer;
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.45);
-  transition:
-    color 0.5s ease,
-    box-shadow 0.5s ease,
-    background-color 0.5s ease;
 }
 
 .button1:hover {
@@ -178,6 +172,7 @@
 .chats {
   grid-area: chats;
   display: block;
+  height: 100vh;
   border-right: 2px solid rgb(201, 201, 201);
   transition: border-right 0.5s ease;
 }
@@ -249,9 +244,9 @@
   height: 100vh;
   width: 100%;
   grid-template-areas:
-    "head head"
-    "message_area message_area"
-    "text_container text_container";
+    "head"
+    "message_area"
+    "text_container";
 }
 
 .head {
@@ -415,7 +410,7 @@
 
 .send_button:disabled {
   opacity: 0.5;
-  cursor: not-allowed;
+  cursor: default !important;
 }
 
 .toggle_container {
@@ -805,6 +800,11 @@
   .messageContainer_otherUser {
     font-size: 0.5rem;
   }
+
+  .chatMedia {
+    max-width: 100px;
+    max-height: 100px;
+  }
 }
 
 @media screen and (max-width: 1000px) and (orientation: landscape) {
@@ -867,6 +867,18 @@
   .messages {
     grid-template-rows: 5rem 60vh 5rem;
   }
+
+  .chatMedia {
+    max-width: 90px;
+    max-height: 90px;
+  }
+}
+
+@media screen and (max-width: 700px) and (orientation: landscape) {
+  .chatMedia {
+    max-width: 150px;
+    max-height: 150px;
+  }
 }
 
 @media screen and (max-width: 360px) and (orientation: portrait) {
@@ -880,5 +892,10 @@
 
   .messages {
     grid-template-rows: 5rem 64vh 5rem;
+  }
+
+  .chatMedia {
+    max-width: 90px;
+    max-height: 90px;
   }
 }

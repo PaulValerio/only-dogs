@@ -372,6 +372,8 @@
 }
 
 .heart_container div {
+  align-content: center;
+  text-align: center;
   height: 10rem;
   width: 7.5rem;
 }

@@ -380,8 +380,9 @@
 
 .animate div {
   visibility: visible;
-  animation: flying 10s alternate infinite,
-  beat 5s ease infinite;
+  animation:
+    flying 10s alternate infinite,
+    beat 5s ease infinite;
 }
 
 @keyframes flying {
@@ -702,6 +703,12 @@
     height: 50%;
     width: 80%;
   }
+
+  @keyframes flying {
+    to {
+      transform: translateY(-100rem);
+    }
+  }
 }
 
 @media screen and (max-width: 1000px) and (orientation: landscape) {
@@ -715,5 +722,13 @@
 
   .userButtonFloat {
     top: 2rem;
+  }
+}
+
+@media screen and (max-width: 1100px) and (orientation: portrait) {
+  @keyframes flying {
+    to {
+      transform: translateY(-125rem);
+    }
   }
 }

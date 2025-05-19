@@ -191,6 +191,7 @@
 .highlight {
   background-color: rgba(255, 107, 107, 0.2);
   border-left: 3px solid rgb(255, 107, 107);
+  z-index: -1;
 }
 
 .no_highlight {
@@ -200,6 +201,7 @@
 .no_highlight::before {
   content: " ";
   position: absolute;
+  z-index: -1;
   background-color: rgba(255, 107, 107, 0);
   width: 0%;
   height: 100%;

@@ -291,8 +291,9 @@ export default function Home() {
                     </div>
                     <h1>Easy Interface</h1>
                     <p>
-                      Our simple check for accept and cross for reject interface
-                      makes finding matches for your dog quick and easy.
+                      Our interface uses a simple heart symbol to accept and a
+                      broken heart symbol to reject, making finding matches for
+                      your dog quick and easy.
                     </p>
                   </div>
                 </div>
